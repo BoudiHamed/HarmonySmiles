@@ -9,7 +9,7 @@
         integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
     <!-- Link Css -->
     <link rel="stylesheet" href="../style/style.css">
-    <link rel="stylesheet" href="../style/contcatus.css">
+    <link rel="stylesheet" href="../style/orthodonticsection.css">
     <title>Document</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
@@ -17,190 +17,197 @@
 <body>
     <!-- HEADER -->
     <header>
-        <!-- Nav-bar -->
-        <nav class="navbar  navbar-expand-lg bg-body-tertiary">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="../index.html"><img class="logo" src="../assets/img/logoclinicadental.png"
-                        alt="logo" loading="lazy"></a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu"
-                    aria-controls="offcanvasMenu" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+      <!-- Nav-bar --> 
+    <nav class="navbar  navbar-expand-md  bg-body-tertiary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="../index.html"><img class="logo" src="../assets/img/logoclinicadental.png" alt="logo" loading="lazy"></a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasMenu"
+          aria-controls="offcanvasMenu"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav fs-5  m-auto mb-lg-0">
-                        <li class="nav-item list-bg">
-                            <a class="nav-link" aria-current="page" href="../index.html">Home</a>
-                        </li>
-                        <li class="nav-item list-bg">
-                            <a class="nav-link" href="../page/before&after.html">Before & After</a>
-                        </li>
-                        <li class="nav-item dropdown list-bg">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                Services
-                            </a>
-                            <ul class="dropdown-menu fs-5" id="dd">
-                                <li class="list-bg"><a class="dropdown-item" id="dd-bg-c"
-                                        href="../page/cleaningsection.html">Dental Cleaning</a>
-                                </li>
-                                <li class="list-bg"><a class="dropdown-item" id="dd-bg-c"
-                                        href="../page/orthodonticsection.html">Orthodontics</a></li>
-                                <li class="list-bg">
-                                    <a class="dropdown-item" id="dd-bg-c" href="../page/implantsection.html">Dental
-                                        Implants</a>
-                                </li>
-                                <li class="list-bg"><a class="dropdown-item" id="dd-bg-c"
-                                        href="../page/whiteningsection.html">Teeth Whitening</a>
-                                </li>
-                                <li class="list-bg"><a class="dropdown-item" id="dd-bg-c"
-                                        href="../page/familysection.html">Family & pediatric
-                                        care</a></li>
-                                <li class="list-bg">
-                                    <a class="dropdown-item" id="dd-bg-c" href="../page/veneersection.html">Veneers</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item list-bg">
-                            <a class="nav-link" href="../page/aboutus.html">About Us</a>
-                        </li>
-                        <li class="nav-item list-bg">
-                            <a class="nav-link" href="../page/contactus.html">Contact Us</a>
-                        </li>
-                    </ul>
-                    <form class="d-flex" role="search">
-                        <input class="form-control me-2" id="in-sh" type="search" placeholder="Search"
-                            aria-label="Search" />
-                        <a href="../page/404error.html" class="btn btn-sh-off-canvas" id="btn-sh">Search</a>
-                    </form>
-                </div>
-            </div>
-        </nav>
-        <!-- Side-bar-Off-Canvas -->
-        <div class="offcanvas offcanvas-end bg-light" id="offcanvasMenu" tabindex="-1"
-            aria-labelledby="offcanvasMenuLabel">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasMenuLabel"> <a class="navbar-brand" href="../index.html"><img class="logo"
-                            src="../assets/img/logoclinicadental.png" alt="logo" loading="lazy"></a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
-                        data-bs-target="#offcanvasMenu" aria-controls="offcanvasMenu" aria-expanded="false"
-                        aria-label="Toggle navigation">
-                </h5>
-                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                    aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">
-                <ul class="navbar-nav flex-column fs-5 align-items-center">
-                    <li class="nav-item list-bg">
-                        <a class="nav-link" aria-current="page" href="../index.html">Home</a>
-                    </li>
-                    <li class="nav-item list-bg">
-                        <a class="nav-link" href="../page/before&after.html">Before & After</a>
-                    </li>
-                    <li class="nav-item dropdown list-bg">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            Services
-                        </a>
-                        <ul class="dropdown-menu" id="dd">
-                            <li class="list-bg"><a class="dropdown-item" id="dd-bg-c" href="../page/cleaningsection.html">Dental Cleaning</a></li>
-                            <li class="list-bg"><a class="dropdown-item" id="dd-bg-c" href="../page/orthodonticsection.html">Orthodontics</a></li>
-                            <li class="list-bg">
-                                <a class="dropdown-item" id="dd-bg-c" href="../page/implantsection.html">Dental Implants</a>
-                            </li>
-                            <li class="list-bg"><a class="dropdown-item" id="dd-bg-c" href="../page/whiteningsection.html">Teeth Whitening</a></li>
-                            <li class="list-bg"><a class="dropdown-item" id="dd-bg-c" href="../page/familysection.html">Family & pediatric
-                                    care</a></li>
-                            <li class="list-bg">
-                                <a class="dropdown-item" id="dd-bg-c" href="../page/veneersection.html">Veneers</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item list-bg">
-                        <a class="nav-link" href="../page/aboutus.html">About Us</a>
-                    </li>
-                    <li class="nav-item list-bg">
-                        <a class="nav-link" href="../page/contactus.html">Contact Us</a>
-                    </li>
-                </ul>
-                <form class="d-flex flex-column align-items-center" role="search">
-                    <input class="form-control m-auto" id="in-sh" type="search" placeholder="Search"
-                        aria-label="Search" />
-                    <a href="../page/404error.html" class="btn btn-sh-off-canvas mt-4" id="btn-sh">Search</a>
-                </form>
-            </div>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav fs-5  m-auto mb-lg-0">
+            <li class="nav-item list-bg">
+              <a class="nav-link" aria-current="page" href="../index.html">Home</a>
+            </li>
+            <li class="nav-item list-bg">
+              <a class="nav-link" href="before&after.html">Before & After</a>
+            </li>
+            <li class="nav-item dropdown list-bg">
+              <a
+                class="nav-link dropdown-toggle"
+                href="services.html"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Services
+              </a>
+              <ul class="dropdown-menu fs-5" id="dd">
+                <li class="list-bg"><a class="dropdown-item" id="dd-bg-c" href="cleaningsection.html">Dental Cleaning</a></li>
+                <li class="list-bg"><a class="dropdown-item" id="dd-bg-c" href="orthodonticsection.html">Orthodontics</a></li>
+                <li class="list-bg">
+                  <a class="dropdown-item" id="dd-bg-c" href="implantsection.html">Dental Implants</a>
+                </li>
+                <li class="list-bg"><a class="dropdown-item" id="dd-bg-c" href="whiteningsection.html">Teeth Whitening</a></li>
+                <li class="list-bg"><a class="dropdown-item" id="dd-bg-c" href="familysection.html">Family & pediatric care</a></li>
+                <li class="list-bg">
+                  <a class="dropdown-item" id="dd-bg-c" href="veneersection.html">Veneers</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item list-bg">
+              <a class="nav-link" href="aboutus.html">About Us</a>
+            </li>
+            <li class="nav-item list-bg">
+              <a class="nav-link" href="contactus.html">Contact Us</a>
+            </li>
+          </ul>
+           
+            <a href="contactus.html" class="btn  btn-sh-off-canvas  " id="btn-sh">
+              Book an Appointment
+            </a>
         </div>
+      </div>
+    </nav>
+    <!-- Side-bar-Off-Canvas --> 
+    <div
+      class="offcanvas offcanvas-end bg-light"
+      id="offcanvasMenu"
+      tabindex="-1"
+      aria-labelledby="offcanvasMenuLabel"
+    >
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasMenuLabel"> <a class="navbar-brand" href="../index.html"><img class="logo" src="../assets/img/logoclinicadental.png" alt="logo" loading="lazy"></a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasMenu"
+          aria-controls="offcanvasMenu"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        ></h5>
+        <button
+          type="button"
+          class="btn-close text-reset"
+          data-bs-dismiss="offcanvas"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="offcanvas-body">
+        <ul class="navbar-nav flex-column fs-5 align-items-center">
+          <li class="nav-item list-bg">
+              <a class="nav-link" aria-current="page" href="../index.html">Home</a>
+            </li>
+            <li class="nav-item list-bg">
+              <a class="nav-link" href="before&after.html">Before & After</a>
+            </li>
+            <li class="nav-item dropdown list-bg">
+              <a
+                class="nav-link dropdown-toggle"
+                href="services.html"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >     
+                Services
+              </a>
+              <ul class="dropdown-menu" id="dd" >
+                <li class="list-bg"><a class="dropdown-item" id="dd-bg-c" href="cleaningsection.html">Dental Cleaning</a></li>
+                <li class="list-bg"><a class="dropdown-item" id="dd-bg-c" href="orthodonticsection.html">Orthodontics</a></li>
+                <li class="list-bg">
+                  <a class="dropdown-item" id="dd-bg-c" href="implantsection.html">Dental Implants</a>
+                </li>
+                <li class="list-bg"><a class="dropdown-item" id="dd-bg-c" href="whiteningsection.html">Teeth Whitening</a></li>
+                <li class="list-bg"><a class="dropdown-item" id="dd-bg-c" href="#">Family & pediatric care</a></li>
+                <li class="list-bg">
+                  <a class="dropdown-item" id="dd-bg-c" href="#">Veneers</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item list-bg">
+              <a class="nav-link" href="aboutus.html">About Us</a>
+            </li>
+            <li class="nav-item list-bg">
+              <a class="nav-link" href="contactus.html">Contact Us</a>
+            </li>
+            <a href="contactus.html" class="btn d-flex  justify-content-center btn-sh-off-canvas  " id="btn-sh">
+              Book an Appointment
+            </a>
+        </ul>
+
+      </div>
+    </div>
     </header>
     <!-- MAIN -->
     <main>
-        <!-- CONTACT US SECTION -->
+        <!-- ORTHODONTICS SECTION -->
         <section class="py-5">
             <div class="container">
-                <!-- Title and introduction -->
+                <!-- Title and subtitle -->
                 <div class="text-center mb-5">
-                    <h2 class="fw-bold">Contact Us</h2>
-                    <p class="text-muted fs-5">Have questions or want to book an appointment? We’re here to help!</p>
+                    <h2 class="fw-bold">Orthodontics</h2>
+                    <p class="text-muted fs-5">Straighten Your Smile with Confidence</p>
+                    <p class="text-muted">Modern solutions for a healthier, straighter smile at any age.</p>
                 </div>
-                <div class="row g-5">
-                    <!-- Contcat formulary -->
-                    <div class="col-md-6">
-                        <form>
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Name</label>
-                                <input type="text" class="form-control required" id="name" placeholder="Your full name" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control required" id="email" placeholder="your@email.com"
-                                    required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="phone" class="form-label">Phone (optional)</label>
-                                <input type="tel" class="form-control required" id="phone" placeholder="+1 555 123 4567">
-                            </div>
-                            <div class="mb-3">
-                                <label for="message" class="form-label">Message</label>
-                                <textarea class="form-control" id="message" rows="4" placeholder="How can we help you?"
-                                    required></textarea>
-                            </div> 
-                            <div class="text-end">                           
-                                <a id="mensaje" class="btn" href="../page/404error.html">Send Message</a>
-                            </div>
-                        </form>
+                <!-- Main picture & description -->
+                <div class="row align-items-center mb-5">
+                    <div class="col-md-6 text-center mb-4 mb-md-0">
+                        <figure>
+                            <img src="https://varietycare.org/images/default-source/services/girl-smiling-with-braces.jpg?Status=Master&sfvrsn=d7b5dd7_3"
+                                alt="Teenager smiling confidently with orthodontic braces at a modern clinic."
+                                class="img-fluid rounded shadow">
+                            <figcaption class="mt-2 text-muted small">Braces and aligners tailored to your smile and
+                                lifestyle.</figcaption>
+                        </figure>
                     </div>
-                    <!-- Contact info + maps -->
                     <div class="col-md-6">
-                        <div class="mb-4">
-                            <h5 class="fw-semibold"><i class="iconoContact fas fa-map-marker-alt me-2"></i> Address</h5>
-                            <p class="text-muted">Avenida Aconquija 226, Yerba Buena, Tucumán, Argentina</p>
-                        </div>
-                        <div class="mb-4">
-                            <h5 class="fw-semibold"><i class="iconoContact fas fa-phone me-2"></i> Phone / WhatsApp</h5>
-                            <p class="text-muted">+20 1052040220</p>
-                            <p class="text-muted">+20 1052040230</p>
-                        </div>
-                        <div class="mb-4">
-                            <h5 class="fw-semibold"><i class="iconoContact fas fa-envelope me-2"></i> Email</h5>
-                            <p class="text-muted">hello@harmonysmiles.com</p>
-                        </div>
-                        <div class="mb-4">
-                            <h5 class="fw-semibold"><i class="iconoContact fas fa-clock me-2"></i> Clinic Hours</h5>
-                            <p class="text-muted">
-                                Mon-Fri: 9:00 AM - 6:00 PM<br>
-                                Sat: 9:00 AM - 1:00 PM<br>
-                                Sun: Closed
-                            </p>
-                        </div>
-                        <!-- Maps -->
-                        <div class="ratio ratio-16x9 rounded shadow">
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3199.058125576352!2d-65.27007472503296!3d-26.817972776703705!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94225cdbf0313fbf%3A0xcb846d3f1a887b6e!2sAv.%20Aconquija%20226%2C%20T4107CDP%20Yerba%20Buena%2C%20Tucum%C3%A1n%2C%20Argentina!5e1!3m2!1sen!2seg!4v1752405861315!5m2!1sen!2seg" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                        </div>
+                        <p>
+                            At <strong>Harmony Smiles</strong>, we understand that a beautifully aligned smile does more
+                            than improve appearance-it enhances overall oral health, confidence, and comfort. Our
+                            <strong>orthodontic treatments</strong> are designed for patients of all ages and include
+                            both traditional braces and discreet clear aligners, depending on your needs and lifestyle.
+                        </p>
+                        <p>
+                            We use precise diagnostics and personalized planning to gently shift your teeth into optimal
+                            alignment. Whether you're correcting crowding, spacing, or bite issues, our team is here to
+                            support you every step of the way.
+                        </p>
+                        <p class="text-muted small">Suitable for children, teens, and adults alike.</p>
                     </div>
-
+                </div>
+                <!-- Images -->
+                <div class="row text-center">
+                    <div class="col-md-6 mb-4">
+                        <figure>
+                            <img src="https://alignerco.com/cdn/shop/articles/clear_braces_deb05fab-5a57-4bdb-9096-9d0bad97029a.webp?v=1747028856"
+                                alt="Clear dental aligners being held by a dental professional."
+                                class="imgOrthodontics img-fluid rounded shadow">
+                            <figcaption class="mt-2 text-muted small">Invisible, removable, and designed for daily
+                                comfort.</figcaption>
+                        </figure>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <figure>
+                            <img src="../assets/img/before&afterbrackets.png"
+                                alt="Before and after orthodontic results showing improved teeth alignment."
+                                class="imgOrthodontics img-fluid rounded shadow">
+                            <figcaption class="mt-2 text-muted small">Real results you can see and feel from start to
+                                smile.</figcaption>
+                        </figure>
+                    </div>
                 </div>
             </div>
         </section>
-
     </main>
     <!-- FOOTER -->
     <footer>

@@ -17,124 +17,136 @@
 <body>
     <!-- HEADER -->
     <header>
-        <!-- Nav-bar -->
-        <nav class="navbar  navbar-expand-lg bg-body-tertiary">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="./index.html"><img class="logo" src="./assets/img/logoclinicadental.png"
-                        alt="logo" loading="lazy"></a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu"
-                    aria-controls="offcanvasMenu" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+      <!-- Nav-bar --> 
+    <nav class="navbar  navbar-expand-md  bg-body-tertiary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="index.html"><img class="logo" src="assets/img/logoclinicadental.png" alt="logo" loading="lazy"></a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasMenu"
+          aria-controls="offcanvasMenu"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav fs-5  m-auto mb-lg-0">
-                        <li class="nav-item list-bg">
-                            <a class="nav-link" aria-current="page" href="./index.html">Home</a>
-                        </li>
-                        <li class="nav-item list-bg">
-                            <a class="nav-link" href="./page/before&after.html">Before & After</a>
-                        </li>
-                        <li class="nav-item dropdown list-bg">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                Services
-                            </a>
-                            <ul class="dropdown-menu fs-5" id="dd">
-                                <li class="list-bg"><a class="dropdown-item" id="dd-bg-c"
-                                        href="./page/cleaningsection.html">Dental Cleaning</a>
-                                </li>
-                                <li class="list-bg"><a class="dropdown-item" id="dd-bg-c"
-                                        href="./page/orthodonticsection.html">Orthodontics</a></li>
-                                <li class="list-bg">
-                                    <a class="dropdown-item" id="dd-bg-c" href="./page/implantsection.html">Dental
-                                        Implants</a>
-                                </li>
-                                <li class="list-bg"><a class="dropdown-item" id="dd-bg-c"
-                                        href="./page/whiteningsection.html">Teeth Whitening</a>
-                                </li>
-                                <li class="list-bg"><a class="dropdown-item" id="dd-bg-c"
-                                        href="./page/familysection.html">Family & pediatric
-                                        care</a></li>
-                                <li class="list-bg">
-                                    <a class="dropdown-item" id="dd-bg-c" href="./page/veneersection.html">Veneers</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item list-bg">
-                            <a class="nav-link" href="./page/aboutus.html">About Us</a>
-                        </li>
-                        <li class="nav-item list-bg">
-                            <a class="nav-link" href="./page/contactus.html">Contact Us</a>
-                        </li>
-                    </ul>
-                    <form class="d-flex" role="search">
-                        <input class="form-control me-2" id="in-sh" type="search" placeholder="Search"
-                            aria-label="Search" />
-                        <a href="./page/404error.html" class="btn btn-sh-off-canvas" id="btn-sh">Search</a>
-                    </form>
-                </div>
-            </div>
-        </nav>
-        <!-- Side-bar-Off-Canvas -->
-        <div class="offcanvas offcanvas-end bg-light" id="offcanvasMenu" tabindex="-1"
-            aria-labelledby="offcanvasMenuLabel">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasMenuLabel"> <a class="navbar-brand" href="./index.html"><img
-                            class="logo" src="./assets/img/logoclinicadental.png" alt="logo" loading="lazy"></a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
-                        data-bs-target="#offcanvasMenu" aria-controls="offcanvasMenu" aria-expanded="false"
-                        aria-label="Toggle navigation">
-                </h5>
-                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                    aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">
-                <ul class="navbar-nav flex-column fs-5 align-items-center">
-                    <li class="nav-item list-bg">
-                        <a class="nav-link" aria-current="page" href="./index.html">Home</a>
-                    </li>
-                    <li class="nav-item list-bg">
-                        <a class="nav-link" href="./page/before&after.html">Before & After</a>
-                    </li>
-                    <li class="nav-item dropdown list-bg">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            Services
-                        </a>
-                        <ul class="dropdown-menu" id="dd">
-                            <li class="list-bg"><a class="dropdown-item" id="dd-bg-c"
-                                    href="./page/cleaningsection.html">Dental Cleaning</a></li>
-                            <li class="list-bg"><a class="dropdown-item" id="dd-bg-c"
-                                    href="./page/orthodonticsection.html">Orthodontics</a></li>
-                            <li class="list-bg">
-                                <a class="dropdown-item" id="dd-bg-c" href="./page/implantsection.html">Dental
-                                    Implants</a>
-                            </li>
-                            <li class="list-bg"><a class="dropdown-item" id="dd-bg-c"
-                                    href="./page/whiteningsection.html">Teeth Whitening</a></li>
-                            <li class="list-bg"><a class="dropdown-item" id="dd-bg-c"
-                                    href="./page/familysection.html">Family & pediatric
-                                    care</a></li>
-                            <li class="list-bg">
-                                <a class="dropdown-item" id="dd-bg-c" href="./page/veneersection.html">Veneers</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item list-bg">
-                        <a class="nav-link" href="./page/aboutus.html">About Us</a>
-                    </li>
-                    <li class="nav-item list-bg">
-                        <a class="nav-link" href="./page/contactus.html">Contact Us</a>
-                    </li>
-                </ul>
-                <form class="d-flex flex-column align-items-center" role="search">
-                    <input class="form-control m-auto" id="in-sh" type="search" placeholder="Search"
-                        aria-label="Search" />
-                    <a href="./page/404error.html" class="btn btn-sh-off-canvas mt-4" id="btn-sh">Search</a>
-                </form>
-            </div>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav fs-5  m-auto mb-lg-0">
+            <li class="nav-item list-bg">
+              <a class="nav-link" aria-current="page" href="index.html">Home</a>
+            </li>
+            <li class="nav-item list-bg">
+              <a class="nav-link" href="page/before&after.html">Before & After</a>
+            </li>
+            <li class="nav-item dropdown list-bg">
+              <a
+                class="nav-link dropdown-toggle"
+                href="page/services.html"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Services
+              </a>
+              <ul class="dropdown-menu fs-5" id="dd">
+                <li class="list-bg"><a class="dropdown-item" id="dd-bg-c" href="page/cleaningsection.html">Dental Cleaning</a></li>
+                <li class="list-bg"><a class="dropdown-item" id="dd-bg-c" href="page/orthodonticsection.html">Orthodontics</a></li>
+                <li class="list-bg">
+                  <a class="dropdown-item" id="dd-bg-c" href="page/implantsection.html">Dental Implants</a>
+                </li>
+                <li class="list-bg"><a class="dropdown-item" id="dd-bg-c" href="page/whiteningsection.html">Teeth Whitening</a></li>
+                <li class="list-bg"><a class="dropdown-item" id="dd-bg-c" href="page/familysection.html">Family & pediatric care</a></li>
+                <li class="list-bg">
+                  <a class="dropdown-item" id="dd-bg-c" href="page/veneersection.html">Veneers</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item list-bg">
+              <a class="nav-link" href="page/aboutus.html">About Us</a>
+            </li>
+            <li class="nav-item list-bg">
+              <a class="nav-link" href="page/contactus.html">Contact Us</a>
+            </li>
+          </ul>
+           
+            <a href="page/contactus.html" class="btn  btn-sh-off-canvas  " id="btn-sh">
+              Book an Appointment
+            </a>
         </div>
+      </div>
+    </nav>
+    <!-- Side-bar-Off-Canvas --> 
+    <div
+      class="offcanvas offcanvas-end bg-light"
+      id="offcanvasMenu"
+      tabindex="-1"
+      aria-labelledby="offcanvasMenuLabel"
+    >
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasMenuLabel"> <a class="navbar-brand" href="index.html"><img class="logo" src="assets/img/logoclinicadental.png" alt="logo" loading="lazy"></a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasMenu"
+          aria-controls="offcanvasMenu"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        ></h5>
+        <button
+          type="button"
+          class="btn-close text-reset"
+          data-bs-dismiss="offcanvas"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="offcanvas-body">
+        <ul class="navbar-nav flex-column fs-5 align-items-center">
+          <li class="nav-item list-bg">
+              <a class="nav-link" aria-current="page" href="#">Home</a>
+            </li>
+            <li class="nav-item list-bg">
+              <a class="nav-link" href="page/before&after.html">Before & After</a>
+            </li>
+            <li class="nav-item dropdown list-bg">
+              <a
+                class="nav-link dropdown-toggle"
+                href="page/services.html"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >     
+                Services
+              </a>
+              <ul class="dropdown-menu" id="dd" >
+                <li class="list-bg"><a class="dropdown-item" id="dd-bg-c" href="page/cleaningsection.html">Dental Cleaning</a></li>
+                <li class="list-bg"><a class="dropdown-item" id="dd-bg-c" href="page/orthodonticsection.html">Orthodontics</a></li>
+                <li class="list-bg">
+                  <a class="dropdown-item" id="dd-bg-c" href="page/implantsection.html">Dental Implants</a>
+                </li>
+                <li class="list-bg"><a class="dropdown-item" id="dd-bg-c" href="page/whiteningsection.html">Teeth Whitening</a></li>
+                <li class="list-bg"><a class="dropdown-item" id="dd-bg-c" href="#">Family & pediatric care</a></li>
+                <li class="list-bg">
+                  <a class="dropdown-item" id="dd-bg-c" href="#">Veneers</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item list-bg">
+              <a class="nav-link" href="page/aboutus.html">About Us</a>
+            </li>
+            <li class="nav-item list-bg">
+              <a class="nav-link" href="page/contactus.html">Contact Us</a>
+            </li>
+            <a href="page/contactus.html" class="btn d-flex  justify-content-center btn-sh-off-canvas  " id="btn-sh">
+              Book an Appointment
+            </a>
+        </ul>
+
+      </div>
+    </div>
     </header>
     <!-- MAIN -->
     <main>
@@ -150,8 +162,8 @@
                 <p>Our team is dedicated to improving your health, comfort, and confidence — one smile at a time.</p>
             </div>
             <!-- ICONS -->
-            <div id="iconos" class="d-flex justify-content-center">
-                <a href="./page/aboutus.html" class="text-decoration-none text-center mx-2">
+            <div id="iconos" class="d-flex flex-column flex-md-row justify-content-center ">
+                <a href="./page/aboutus.html" class="text-decoration-none text-center">
                     <div class="divIcono d-flex flex-column align-items-center gap-3">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-person-arms-up"
                             viewBox="0 0 16 16">
@@ -162,13 +174,13 @@
                         <p>WHO WE ARE</p>
                     </div>
                 </a>
-                <a href="./page/service.html" class="text-decoration-none text-center mx-2">
+                <a href="./page/service.html" class="text-decoration-none text-center">
                     <div class="divIcono d-flex flex-column align-items-center gap-3">
                         <i class="bi fas fa-tooth"></i>
                         <p>SERVICES</p>
                     </div>
                 </a>
-                <a href="./page/before&after.html" class="text-decoration-none text-center mx-3">
+                <a href="./page/before&after.html" class="text-decoration-none text-center ">
                     <div class="divIcono d-flex flex-column align-items-center gap-3">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-image"
                             viewBox="0 0 16 16">
@@ -179,7 +191,7 @@
                         <p>BEFORE & AFTER</p>
                     </div>
                 </a>
-                <a href="./page/contactus.html" class="text-decoration-none text-center mx-3">
+                <a href="./page/contactus.html" class="text-decoration-none text-center">
                     <div class="divIcono d-flex flex-column align-items-center gap-3">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-chat-text-fill"
                             viewBox="0 0 16 16">
@@ -192,9 +204,9 @@
             </div>
         </section>
         <!-- CARDS -->
-        <section id="cardsSection" class="d-flex flex-wrap justify-content-around">
+        <section id="cardsSection" class="d-flex flex-wrap justify-content-center justify-content-md-around">
             <a href="#" class="text-decoration-none">
-                <div class="homeCard card mt-2" style="width: 25rem;">
+                <div class="homeCard card mt-2" style="width: 20rem;">
                     <img src="./assets/img/dentist-5428007_1280.jpg" class="card-img-top" alt="Clinic">
                     <div class="card-body text-center">
                         <h6>Everything you need to know before your first visit</h6>
@@ -202,16 +214,16 @@
                 </div>
             </a>
             <a href="#" class="text-decoration-none">
-                <div class="homeCard card mt-2" style="width: 25rem;">
+                <div class="homeCard card mt-2" style="width: 20rem;">
                     <img src="./assets/img/teeth-2339168_1280.jpg" class="card-img-top" alt="Smile">
                     <div class="card-body text-center">
                         <h6>Real patient results that speak for themselves</h6>
-                        <br>
+                        
                     </div>
                 </div>
             </a>
             <a href="#" class="text-decoration-none">
-                <div class="homeCard card mt-2" style="width: 25rem;">
+                <div class="homeCard card mt-2" style="width: 20rem;">
                     <img src="./assets/img/workplace-5517762_1280.jpg" class="card-img-top" alt="Reception">
                     <div class="card-body text-center">
                         <h6>Get in touch, find us, or book an appointment today</h6>
@@ -221,9 +233,9 @@
         </section>
         <!-- SERVICE -->
         <section id="services"
-            class="serviceSection d-flex align-items-start justify-content-center gap-5 mt-4 flex-wrap position-relative">
+            class="serviceSection d-flex align-items-start justify-content-center gap-5 mt-4 flex-wrap position-relative ">
             <!-- BACKGROUND -->
-            <div class="services-image">
+            <div class="services-image d-flex justify-content-center " style="width: 20rem;">
                 <img src="./assets/img/adult-3264740_1280.jpg" alt="Smiling patient">
             </div>
             <div class="services-content">

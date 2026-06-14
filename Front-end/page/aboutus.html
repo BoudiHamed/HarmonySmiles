@@ -9,7 +9,7 @@
         integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
     <!-- Link Css -->
     <link rel="stylesheet" href="../style/style.css">
-    <link rel="stylesheet" href="../style/veneersction.css">
+    <link rel="stylesheet" href="../style/aboutus.css">
     <title>Document</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
@@ -17,190 +17,227 @@
 <body>
     <!-- HEADER -->
     <header>
-        <!-- Nav-bar -->
-        <nav class="navbar  navbar-expand-lg bg-body-tertiary">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="../index.html"><img class="logo" src="../assets/img/logoclinicadental.png"
-                        alt="logo" loading="lazy"></a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu"
-                    aria-controls="offcanvasMenu" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+      <!-- Nav-bar --> 
+    <nav class="navbar  navbar-expand-md  bg-body-tertiary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="../index.html"><img class="logo" src="../assets/img/logoclinicadental.png" alt="logo" loading="lazy"></a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasMenu"
+          aria-controls="offcanvasMenu"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav fs-5  m-auto mb-lg-0">
-                        <li class="nav-item list-bg">
-                            <a class="nav-link" aria-current="page" href="../index.html">Home</a>
-                        </li>
-                        <li class="nav-item list-bg">
-                            <a class="nav-link" href="../page/before&after.html">Before & After</a>
-                        </li>
-                        <li class="nav-item dropdown list-bg">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                Services
-                            </a>
-                            <ul class="dropdown-menu fs-5" id="dd">
-                                <li class="list-bg"><a class="dropdown-item" id="dd-bg-c"
-                                        href="../page/cleaningsection.html">Dental Cleaning</a>
-                                </li>
-                                <li class="list-bg"><a class="dropdown-item" id="dd-bg-c"
-                                        href="../page/orthodonticsection.html">Orthodontics</a></li>
-                                <li class="list-bg">
-                                    <a class="dropdown-item" id="dd-bg-c" href="../page/implantsection.html">Dental
-                                        Implants</a>
-                                </li>
-                                <li class="list-bg"><a class="dropdown-item" id="dd-bg-c"
-                                        href="../page/whiteningsection.html">Teeth Whitening</a>
-                                </li>
-                                <li class="list-bg"><a class="dropdown-item" id="dd-bg-c"
-                                        href="../page/familysection.html">Family & pediatric
-                                        care</a></li>
-                                <li class="list-bg">
-                                    <a class="dropdown-item" id="dd-bg-c" href="../page/veneersection.html">Veneers</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item list-bg">
-                            <a class="nav-link" href="../page/aboutus.html">About Us</a>
-                        </li>
-                        <li class="nav-item list-bg">
-                            <a class="nav-link" href="../page/contactus.html">Contact Us</a>
-                        </li>
-                    </ul>
-                    <form class="d-flex" role="search">
-                        <input class="form-control me-2" id="in-sh" type="search" placeholder="Search"
-                            aria-label="Search" />
-                        <a href="../page/404error.html" class="btn btn-sh-off-canvas" id="btn-sh">Search</a>
-                    </form>
-                </div>
-            </div>
-        </nav>
-        <!-- Side-bar-Off-Canvas -->
-        <div class="offcanvas offcanvas-end bg-light" id="offcanvasMenu" tabindex="-1"
-            aria-labelledby="offcanvasMenuLabel">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasMenuLabel"> <a class="navbar-brand" href="../index.html"><img class="logo"
-                            src="../assets/img/logoclinicadental.png" alt="logo" loading="lazy"></a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
-                        data-bs-target="#offcanvasMenu" aria-controls="offcanvasMenu" aria-expanded="false"
-                        aria-label="Toggle navigation">
-                </h5>
-                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                    aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">
-                <ul class="navbar-nav flex-column fs-5 align-items-center">
-                    <li class="nav-item list-bg">
-                        <a class="nav-link" aria-current="page" href="../index.html">Home</a>
-                    </li>
-                    <li class="nav-item list-bg">
-                        <a class="nav-link" href="../page/before&after.html">Before & After</a>
-                    </li>
-                    <li class="nav-item dropdown list-bg">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            Services
-                        </a>
-                        <ul class="dropdown-menu" id="dd">
-                            <li class="list-bg"><a class="dropdown-item" id="dd-bg-c" href="../page/cleaningsection.html">Dental Cleaning</a></li>
-                            <li class="list-bg"><a class="dropdown-item" id="dd-bg-c" href="../page/orthodonticsection.html">Orthodontics</a></li>
-                            <li class="list-bg">
-                                <a class="dropdown-item" id="dd-bg-c" href="../page/implantsection.html">Dental Implants</a>
-                            </li>
-                            <li class="list-bg"><a class="dropdown-item" id="dd-bg-c" href="../page/whiteningsection.html">Teeth Whitening</a></li>
-                            <li class="list-bg"><a class="dropdown-item" id="dd-bg-c" href="../page/familysection.html">Family & pediatric
-                                    care</a></li>
-                            <li class="list-bg">
-                                <a class="dropdown-item" id="dd-bg-c" href="../page/veneersection.html">Veneers</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item list-bg">
-                        <a class="nav-link" href="../page/aboutus.html">About Us</a>
-                    </li>
-                    <li class="nav-item list-bg">
-                        <a class="nav-link" href="../page/contactus.html">Contact Us</a>
-                    </li>
-                </ul>
-                <form class="d-flex flex-column align-items-center" role="search">
-                    <input class="form-control m-auto" id="in-sh" type="search" placeholder="Search"
-                        aria-label="Search" />
-                    <a href="../page/404error.html" class="btn btn-sh-off-canvas mt-4" id="btn-sh">Search</a>
-                </form>
-            </div>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav fs-5  m-auto mb-lg-0">
+            <li class="nav-item list-bg">
+              <a class="nav-link" aria-current="page" href="../index.html">Home</a>
+            </li>
+            <li class="nav-item list-bg">
+              <a class="nav-link" href="before&after.html">Before & After</a>
+            </li>
+            <li class="nav-item dropdown list-bg">
+              <a
+                class="nav-link dropdown-toggle"
+                href="services.html"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Services
+              </a>
+              <ul class="dropdown-menu fs-5" id="dd">
+                <li class="list-bg"><a class="dropdown-item" id="dd-bg-c" href="cleaningsection.html">Dental Cleaning</a></li>
+                <li class="list-bg"><a class="dropdown-item" id="dd-bg-c" href="orthodonticsection.html">Orthodontics</a></li>
+                <li class="list-bg">
+                  <a class="dropdown-item" id="dd-bg-c" href="implantsection.html">Dental Implants</a>
+                </li>
+                <li class="list-bg"><a class="dropdown-item" id="dd-bg-c" href="whiteningsection.html">Teeth Whitening</a></li>
+                <li class="list-bg"><a class="dropdown-item" id="dd-bg-c" href="familysection.html">Family & pediatric care</a></li>
+                <li class="list-bg">
+                  <a class="dropdown-item" id="dd-bg-c" href="veneersection.html">Veneers</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item list-bg">
+              <a class="nav-link" href="aboutus.html">About Us</a>
+            </li>
+            <li class="nav-item list-bg">
+              <a class="nav-link" href="contactus.html">Contact Us</a>
+            </li>
+          </ul>
+           
+            <a href="contactus.html" class="btn  btn-sh-off-canvas  " id="btn-sh">
+              Book an Appointment
+            </a>
         </div>
+      </div>
+    </nav>
+    <!-- Side-bar-Off-Canvas --> 
+    <div
+      class="offcanvas offcanvas-end bg-light"
+      id="offcanvasMenu"
+      tabindex="-1"
+      aria-labelledby="offcanvasMenuLabel"
+    >
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasMenuLabel"> <a class="navbar-brand" href="../index.html"><img class="logo" src="../assets/img/logoclinicadental.png" alt="logo" loading="lazy"></a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasMenu"
+          aria-controls="offcanvasMenu"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        ></h5>
+        <button
+          type="button"
+          class="btn-close text-reset"
+          data-bs-dismiss="offcanvas"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="offcanvas-body">
+        <ul class="navbar-nav flex-column fs-5 align-items-center">
+          <li class="nav-item list-bg">
+              <a class="nav-link" aria-current="page" href="../index.html">Home</a>
+            </li>
+            <li class="nav-item list-bg">
+              <a class="nav-link" href="before&after.html">Before & After</a>
+            </li>
+            <li class="nav-item dropdown list-bg">
+              <a
+                class="nav-link dropdown-toggle"
+                href="services.html"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >     
+                Services
+              </a>
+              <ul class="dropdown-menu" id="dd" >
+                <li class="list-bg"><a class="dropdown-item" id="dd-bg-c" href="cleaningsection.html">Dental Cleaning</a></li>
+                <li class="list-bg"><a class="dropdown-item" id="dd-bg-c" href="orthodonticsection.html">Orthodontics</a></li>
+                <li class="list-bg">
+                  <a class="dropdown-item" id="dd-bg-c" href="implantsection.html">Dental Implants</a>
+                </li>
+                <li class="list-bg"><a class="dropdown-item" id="dd-bg-c" href="whiteningsection.html">Teeth Whitening</a></li>
+                <li class="list-bg"><a class="dropdown-item" id="dd-bg-c" href="#">Family & pediatric care</a></li>
+                <li class="list-bg">
+                  <a class="dropdown-item" id="dd-bg-c" href="#">Veneers</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item list-bg">
+              <a class="nav-link" href="aboutus.html">About Us</a>
+            </li>
+            <li class="nav-item list-bg">
+              <a class="nav-link" href="contactus.html">Contact Us</a>
+            </li>
+            <a href="contactus.html" class="btn d-flex  justify-content-center btn-sh-off-canvas  " id="btn-sh">
+              Book an Appointment
+            </a>
+        </ul>
+
+      </div>
+    </div>
     </header>
     <!-- MAIN -->
     <main>
-        <!-- VENEERS SECTION (EXTENDED) -->
+        <!-- ABOUT US SECTION -->
         <section class="py-5">
             <div class="container">
                 <!-- Title -->
                 <div class="text-center mb-5">
-                    <h2 class="fw-bold">Veneers</h2>
-                    <p class="text-muted fs-5">A flawless smile, designed just for you.</p>
+                    <h2 class="fw-bold">About Harmony Smiles</h2>
+                    <p class="text-muted fs-5">A dental experience built on trust, care, and excellence.</p>
                 </div>
-                <!-- Part 1 -->
-                <div class="row align-items-center g-5 mb-5">
-                    <div class="col-md-6">
-                        <img src="https://sa1s3optim.patientpop.com/assets/images/provider/photos/2586775.jpeg"
-                            alt="Radiant smile showing dental veneers at Harmony Smiles"
-                            class="img-fluid rounded shadow img-cover">
-                    </div>
-                    <div class="col-md-6">
-                        <p>
-                            Veneers are ultra-thin porcelain shells custom-crafted to enhance the front of your teeth.
-                            They are the go-to solution for patients looking to transform their smile in a subtle, yet
-                            powerful way.
-                        </p>
-                        <p>
-                            At <strong>Harmony Smiles</strong>, we carefully design veneers that complement your facial
-                            structure and blend naturally with your existing teeth — offering both beauty and
-                            durability.
+                <!-- History -->
+                <div class="row justify-content-center mb-5">
+                    <div class="col-md-10 text-center">
+                        <p class="lead text-muted">
+                            Harmony Smiles was founded with a simple goal: to provide high-quality dental care in a
+                            calm, welcoming environment.
+                            Over the years, we’ve grown into a trusted clinic known for our personalized approach and
+                            patient-first philosophy.
                         </p>
                     </div>
                 </div>
-                <!-- Part 2: benefits -->
-                <div id="benefits" class="row text-center mb-4">
-                    <div class="veneersIcons col-md-4">
-                        <i class="bi fas fa-smile-beam fa-2x text-muted mb-2"></i>
-                        <h5 class="fw-bold">Instant Aesthetic Upgrade</h5>
-                        <p class="small">Conceal stains, chips, and gaps in a few easy appointments.</p>
+                <!-- Mision and values -->
+                <div id="iconosMision" class="row text-center mb-5">
+                    <div class="col-md-4">
+                        <i class="fas fa-heart fs-1 mb-3"></i>
+                        <h5 class="fw-semibold">Compassionate Care</h5>
+                        <p class="text-muted">We treat every patient with warmth and empathy.</p>
                     </div>
-                    <div class="veneersIcons col-md-4">
-                        <i class="bi fas fa-brush fa-2x text-muted mb-2"></i>
-                        <h5 class="fw-bold">Custom Design</h5>
-                        <p class="small">Shape and shade tailored uniquely to your face and smile.</p>
+                    <div class="col-md-4">
+                        <i class="fas fa-gem fs-1 mb-3"></i>
+                        <h5 class="fw-semibold">Excellence</h5>
+                        <p class="text-muted">We uphold the highest standards in dental care and technology.</p>
                     </div>
-                    <div class="veneersIcons col-md-4">
-                        <i class="bi fas fa-shield-alt fa-2x text-muted mb-2"></i>
-                        <h5 class="fw-bold">Strong & Stain-Resistant</h5>
-                        <p class="small">Porcelain veneers last for years with minimal care.</p>
+                    <div class="col-md-4">
+                        <i class="fas fa-leaf fs-1 mb-3"></i>
+                        <h5 class="fw-semibold">Wellness First</h5>
+                        <p class="text-muted">We focus on your comfort, health, and long-term wellbeing.</p>
                     </div>
                 </div>
-                <!-- Part 3: before & after -->
-                <div class="row align-items-center g-5 mb-5">
-                    <div class="col-md-6">
-                        <p>
-                            Whether you're preparing for a big event, professional milestone, or simply want to feel
-                            more confident in your day-to-day life — veneers can help you achieve the smile you've
-                            always dreamed of.
-                        </p>
-                        <p class="fst-italic text-muted">
-                            “I can't stop smiling. My veneers look so natural, no one knows — but everyone notices.”<br>
-                            <span class="fw-semibold">— Rachel D., Harmony Smiles patient</span>
-                        </p>
-                    </div>
-                    <div class="col-md-6">
-                        <img src="../assets/img/before&afterveneers.png"
-                            alt="Before and after image showing the transformation from natural teeth to porcelain veneers"
-                            class="img-fluid rounded shadow img-cover">
+                <!-- Crew -->
+                <div class="text-center mb-4">
+                    <h3 class="fw-bold">Meet Our Team</h3>
+                    <div class="row justify-content-center mt-5 g-4">
+                        <!-- Dr 1 -->
+                        <div class="col-md-4 text-center">
+                            <img src="../assets/img/DENTIST.png" alt="Dr. Sofia Bennett" class="doctors rounded-circle shadow">
+                            <h5 class="mt-3 mb-0">Dr. Sofia Bennett</h5>
+                            <p class="text-muted small mb-1">Lead Dentist · Cosmetic & Family Care</p>
+                            <p class="text-muted small">
+                                With over 15 years of experience, Dr. Bennett is known for her gentle touch and eye for
+                                aesthetics.
+                                She leads the Harmony Smiles team with care and precision.
+                            </p>
+                        </div>
+                        <!-- Dr 2 -->
+                        <div class="col-md-4 text-center">
+                            <img src="../assets/img/DENTIST2.png" alt="Dr. Alan Romero" class="doctors rounded-circle shadow">
+                            <h5 class="mt-3 mb-0">Dr. Alan Romero</h5>
+                            <p class="text-muted small mb-1">Orthodontics Specialist</p>
+                            <p class="text-muted small">
+                                Dr. Romero specializes in creating beautiful, functional smiles through personalized
+                                orthodontic care.
+                                His friendly approach puts every patient at ease.
+                            </p>
+                        </div>
+                        <!-- Dr 3 -->
+                        <div class="col-md-4 text-center">
+                            <img src="../assets/img/DENTIST3.png" alt="Sarah Kim, RDH" class="doctors rounded-circle shadow">
+                            <h5 class="mt-3 mb-0">Sarah Kim, RDH</h5>
+                            <p class="text-muted small mb-1">Registered Dental Hygienist</p>
+                            <p class="text-muted small">
+                                Sarah believes prevention is key to lifelong oral health. She offers gentle cleanings
+                                and helpful guidance in every visit to keep smiles healthy and strong.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
+            <!-- Frase -->
+            <div class="row mt-5">
+                <div class="col text-center">
+                    <p class="fs-5 fst-italic text-white">
+                        “We’re not just here to take care of your teeth — we’re here to make you feel at home.”
+                    </p>
+                </div>
+            </div>
+            </div>
         </section>
     </main>
+    <!-- FOOTER -->
     <footer>
         <div class="d-flex  flex-column">
             <div class="container-fluid text-center mt-auto">
@@ -396,3 +433,5 @@
         integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
         crossorigin="anonymous"></script>
 </body>
+
+</html>
