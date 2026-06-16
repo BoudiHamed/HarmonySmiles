@@ -3,20 +3,17 @@ description: Skill / Project Specification: Dental Clinic Reservation System
 ---
 
 Project Goal
-Build a complete Full Stack Dental Clinic Reservation System suitable for a Junior Full Stack Developer portfolio. The objective is educational:
-
+Build a complete Full Stack Dental Clinic Reservation System suitable for Real dental Clinic.
 Understand SQL deeply.
 
-Build a real-world project from scratch.
-
-Avoid ORMs.
+Use the latest syntax of technologies(typescript,postgressql,express ...etc)
 
 Use raw PostgreSQL queries through Node.js.
 
 Tech Stack
 Frontend: HTML5, CSS3, Bootstrap 5, Vanilla JavaScript, Fetch API.
 
-Backend: Node.js, Express.js.
+Backend: Node.js, Typescript, Express.js.
 
 Database: PostgreSQL (using pg package only. No ORMs).
 
@@ -25,9 +22,11 @@ Authentication: JWT, bcrypt.
 Other Packages: cors, dotenv, nodemon.
 
 General Rules
+Follow Solid princples.
+
 Follow clean architecture principles (Separate routes, controllers, middleware, and repository logic).
 
-Write readable code with explanatory comments.
+Write readable code with explanatory short comments.
 
 Use async/await for asynchronous operations.
 
