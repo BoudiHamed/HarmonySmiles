@@ -1,0 +1,1 @@
+export const ALLOWED_APPOINTMENT_STATUSES = ['Pending', 'Confirmed', 'Cancelled', 'Completed', 'No_Show'] as const;
