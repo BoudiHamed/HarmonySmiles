@@ -150,4 +150,5 @@ Sets status to Cancelled.
 
 DELETE /admin/appointments/:id (Protected)
 
+
 Deletes appointment.
