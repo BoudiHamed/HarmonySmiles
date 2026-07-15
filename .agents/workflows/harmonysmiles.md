@@ -111,7 +111,7 @@ notes (TEXT)
 created_at (TIMESTAMP DEFAULT CURRENT_TIMESTAMP)
 
 Constraints & Indexes
-Foreign Key: FOREIGN KEY (patient_id) REFERENCES patients(id) ON DELETE CASCADE
+Foreign Key: FOREIGN KEY (patient_id) REFERENCES patients(id) ON DELETE RESTRICT
 
 Partial Unique Index (Crucial Fix): * CREATE UNIQUE INDEX unique_active_appointment ON appointments (appointment_date, appointment_time) WHERE status != 'Cancelled';
 

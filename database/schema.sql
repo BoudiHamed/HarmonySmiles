@@ -10,9 +10,9 @@ username VARCHAR(50) UNIQUE NOT NULL,
 
 password_hash VARCHAR(255) NOT NULL,
 
-created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
 
-updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+updated_at TIMESTAMPTZ  DEFAULT CURRENT_TIMESTAMP
 
 
 );
@@ -24,13 +24,13 @@ updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 CREATE TABLE IF NOT EXISTS patients (
     id SERIAL PRIMARY KEY,
     medical_record_number VARCHAR(20) UNIQUE NOT NULL,
-    full_name VARCHAR(50) NOT NULL,
-    phone VARCHAR(30) NOT NULL,
+    full_name VARCHAR(100) NOT NULL,
+    phone VARCHAR(30) UNIQUE NOT NULL,
     birth_year INTEGER NOT NULL, 
     gender VARCHAR(10) NOT NULL,
     email VARCHAR(100),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMPTZ  DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT check_gender
         CHECK (gender IN ('Male', 'Female'))
 );
@@ -53,9 +53,9 @@ notes TEXT,
 
 status VARCHAR(20) DEFAULT 'Pending',
 
-created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
 
-updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+updated_at TIMESTAMPTZ  DEFAULT CURRENT_TIMESTAMP,
 
 CONSTRAINT fk_patient
     FOREIGN KEY (patient_id)
@@ -87,9 +87,7 @@ appointment_time
 WHERE status IN ('Pending', 'Confirmed');
 
 -- 5. PERFORMANCE INDEXES
-
-CREATE INDEX idx_patients_phone
-ON patients(phone);
+-- (patients.phone already has an index via its UNIQUE constraint above)
 
 CREATE INDEX idx_appointments_date
 ON appointments(appointment_date);

@@ -1,1 +1,1 @@
-{"version":3,"file":"appointment.service.d.ts","sourceRoot":"","sources":["../../src/services/appointment.service.ts"],"names":[],"mappings":""}
+{"version":3,"file":"appointment.service.d.ts","sourceRoot":"","sources":["../../src/services/appointment.service.ts"],"names":[],"mappings":"AAEA,OAAO,EAAE,oBAAoB,EAAE,MAAM,+BAA+B,CAAC;AAGrE,eAAO,MAAM,wBAAwB,GAAU,MAAM,oBAAoB,KAAG,OAAO,CAAC,OAAO,CAwE1F,CAAC"}
