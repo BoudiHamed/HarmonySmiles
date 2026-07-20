@@ -17,6 +17,12 @@ export const errorMiddleware = (error: unknown, _req: Request, res: Response, _n
     return;
   }
 
+  // express.json() throws this on malformed request bodies — a client error, not a server one.
+  if (error instanceof SyntaxError && 'status' in error && error.status === 400) {
+    res.status(400).json({ success: false, message: 'Invalid JSON body' });
+    return;
+  }
+
   console.error(error);
   res.status(500).json({ success: false, message: 'Internal server error' });
 };

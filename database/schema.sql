@@ -24,7 +24,8 @@ updated_at TIMESTAMPTZ  DEFAULT CURRENT_TIMESTAMP
 CREATE TABLE IF NOT EXISTS patients (
     id SERIAL PRIMARY KEY,
     medical_record_number VARCHAR(20) UNIQUE NOT NULL,
-    full_name VARCHAR(100) NOT NULL,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
     phone VARCHAR(30) UNIQUE NOT NULL,
     birth_year INTEGER NOT NULL, 
     gender VARCHAR(10) NOT NULL,

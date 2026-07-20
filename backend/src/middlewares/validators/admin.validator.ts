@@ -1,0 +1,22 @@
+import { z } from 'zod';
+import { ALLOWED_APPOINTMENT_STATUSES } from '../../constants/appointment.constants.js';
+
+export const listAppointmentsSchema = z.object({
+  query: z
+    .object({
+      status: z.enum(ALLOWED_APPOINTMENT_STATUSES).optional(),
+      search: z.string().trim().min(1).optional(),
+    })
+    .strict(),
+});
+
+export const appointmentIdParamSchema = z.object({
+  params: z
+    .object({
+      id: z.coerce
+        .number({ error: 'Appointment id is required' })
+        .int('Appointment id must be an integer')
+        .positive('Appointment id must be positive'),
+    })
+    .strict(),
+});

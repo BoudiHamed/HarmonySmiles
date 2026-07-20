@@ -1,25 +1,28 @@
-export interface patients {
+export interface Patient {
     id: number;
-    full_name: string;
-    email: string | null;
-    phone: string;
     medical_record_number: string;
-    age: number;
-    gender: "Male" | "Female";
-    created_at: Date;
-    updated_at: Date;
-}
-export interface createPatient {
-    full_name: string;
-    email?: string;
+    first_name: string;
+    last_name: string;
     phone: string;
     birth_year: number;
     gender: 'Male' | 'Female';
+    email: string | null;
+    created_at: Date;
+    updated_at: Date;
 }
-export interface updatePatient {
-    full_name?: string;
+export interface CreatePatientDTO {
+    first_name: string;
+    last_name: string;
+    phone: string;
+    birth_year: number;
+    gender: 'Male' | 'Female';
     email?: string;
+}
+export interface UpdatePatientDTO {
+    first_name?: string;
+    last_name?: string;
     phone?: string;
     gender?: 'Male' | 'Female';
+    email?: string;
 }
 //# sourceMappingURL=patient.types.d.ts.map

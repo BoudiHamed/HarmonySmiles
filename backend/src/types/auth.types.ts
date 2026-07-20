@@ -1,4 +1,4 @@
-import type { Admin } from "./admin.types.ts";
+import type { Admin } from "./admin.types.js";
 
 export interface loginInput {
   username: string;

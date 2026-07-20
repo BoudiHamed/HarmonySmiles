@@ -1,0 +1,1 @@
+{"version":3,"file":"clinicTime.js","sourceRoot":"","sources":["../../src/utils/clinicTime.ts"],"names":[],"mappings":"AAAA,MAAM,CAAC,MAAM,eAAe,GAAG,eAAe,CAAC;AAE/C,8EAA8E;AAC9E,MAAM,CAAC,MAAM,YAAY,GAAG,GAAS,EAAE;IACrC,OAAO,IAAI,IAAI,CAAC,IAAI,IAAI,EAAE,CAAC,cAAc,CAAC,OAAO,EAAE,EAAE,QAAQ,EAAE,eAAe,EAAE,CAAC,CAAC,CAAC;AACrF,CAAC,CAAC"}

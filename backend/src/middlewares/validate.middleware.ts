@@ -1,8 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { ZodType } from 'zod';
 
-// Validates { body, query, params } against `schema` and, on success, replaces
-// req.body/query/params with the parsed output (so coercions like z.coerce.number() take effect).
+// Validates { body, query, params } against `schema`, replacing them with the parsed (coerced) output.
 export const validate = (schema: ZodType) => (req: Request, _res: Response, next: NextFunction): void => {
   const result = schema.safeParse({ body: req.body, query: req.query, params: req.params });
 
@@ -13,7 +12,15 @@ export const validate = (schema: ZodType) => (req: Request, _res: Response, next
 
   const parsed = result.data as { body?: unknown; query?: unknown; params?: unknown };
   if (parsed.body !== undefined) req.body = parsed.body;
-  if (parsed.query !== undefined) req.query = parsed.query as Request['query'];
+  // req.query is getter-only in Express 5; redefine it instead of assigning.
+  if (parsed.query !== undefined) {
+    Object.defineProperty(req, 'query', {
+      value: parsed.query,
+      writable: true,
+      configurable: true,
+      enumerable: true,
+    });
+  }
   if (parsed.params !== undefined) req.params = parsed.params as Request['params'];
 
   next();

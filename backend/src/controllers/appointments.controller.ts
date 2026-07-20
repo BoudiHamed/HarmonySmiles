@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { createAppointmentService } from '../services/appointment.service.js';
+import { createAppointmentService, getAvailableSlotsService } from '../services/appointment.service.js';
 
 /** Create a new appointment (patient-facing) */
 export const createAppointment = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -14,6 +14,25 @@ export const createAppointment = async (req: Request, res: Response, next: NextF
       success: true,
       message: 'Appointment booked successfully',
       data: newAppointment,
+    });
+
+  } catch (error) {
+    // Forward to the central error handler
+    next(error);
+  }
+};
+
+/** List free 30-minute slots for a given date (patient-facing) */
+export const getAvailableSlots = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    // Query already validated by middleware
+    const { date } = req.query as { date: string };
+
+    const slots = await getAvailableSlotsService(date);
+
+    res.status(200).json({
+      success: true,
+      data: slots,
     });
 
   } catch (error) {

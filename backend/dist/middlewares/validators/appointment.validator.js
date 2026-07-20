@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { getClinicNow } from "../../utils/clinicTime.js";
 const currentYear = new Date().getFullYear();
 export const createAppointmentSchema = z
     .object({
@@ -7,13 +8,20 @@ export const createAppointmentSchema = z
         // ============================
         // Patient Information
         // ============================
-        full_name: z
+        first_name: z
             .string({
-            error: "Full name is required",
+            error: "First name is required",
         })
             .trim()
-            .min(3, "Full name must be at least 3 characters")
-            .max(100, "Full name must be less than 100 characters"),
+            .min(1, "First name must be at least 1 character")
+            .max(50, "First name must be less than 50 characters"),
+        last_name: z
+            .string({
+            error: "Last name is required",
+        })
+            .trim()
+            .min(1, "Last name must be at least 1 character")
+            .max(50, "Last name must be less than 50 characters"),
         phone: z
             .string({
             error: "Phone number is required",
@@ -79,26 +87,8 @@ export const createAppointmentSchema = z
         });
         return;
     }
-    const formatter = new Intl.DateTimeFormat("en-US", {
-        timeZone: "Africa/Cairo",
-        year: "numeric",
-        month: "numeric",
-        day: "numeric",
-        hour: "numeric",
-        minute: "numeric",
-        second: "numeric",
-        hour12: false,
-    });
-    const parts = formatter.formatToParts(new Date());
-    const getPart = (type) => parseInt(parts.find((p) => p.type === type).value, 10);
-    const year = getPart("year");
-    const month = getPart("month") - 1;
-    const day = getPart("day");
-    const hour = getPart("hour") === 24 ? 0 : getPart("hour");
-    const minute = getPart("minute");
-    const second = getPart("second");
-    const nowInCairo = new Date(year, month, day, hour, minute, second);
-    if (appointment <= nowInCairo) {
+    const nowInClinicTimezone = getClinicNow();
+    if (appointment <= nowInClinicTimezone) {
         ctx.addIssue({
             code: z.ZodIssueCode.custom,
             path: ["body", "appointment_date"],

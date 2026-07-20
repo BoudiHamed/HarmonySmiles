@@ -44,7 +44,7 @@ Smart Available Slots (GET /available-slots):
 
 System must return only free 30-minute slots between 10:00 AM and 6:00 PM.
 
-Friday is completely unavailable. Past dates are rejected.
+Sunday is completely unavailable (clinic is in Switzerland). Past dates are rejected.
 
 Smart Filter: If the user checks slots for "today", the system must filter out and exclude slots that have already passed in the current day's hours.
 
@@ -84,7 +84,9 @@ patients Table:
 
 id (SERIAL PRIMARY KEY)
 
-full_name (VARCHAR(100) NOT NULL)
+first_name (VARCHAR(50) NOT NULL)
+
+last_name (VARCHAR(50) NOT NULL)
 
 phone (VARCHAR(30) UNIQUE NOT NULL)
 

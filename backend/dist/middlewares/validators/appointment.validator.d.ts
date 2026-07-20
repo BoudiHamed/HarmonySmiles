@@ -1,7 +1,8 @@
 import { z } from "zod";
 export declare const createAppointmentSchema: z.ZodObject<{
     body: z.ZodObject<{
-        full_name: z.ZodString;
+        first_name: z.ZodString;
+        last_name: z.ZodString;
         phone: z.ZodString;
         birth_year: z.ZodCoercedNumber<unknown>;
         gender: z.ZodEnum<{

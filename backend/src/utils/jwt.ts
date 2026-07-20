@@ -1,16 +1,16 @@
 import jwt from 'jsonwebtoken';
 import { jwtPayload } from '../types/auth.types.js';
 
-const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_SECRET = process.env.JWT_SECRET as string;
 
 if (!JWT_SECRET) {
   throw new Error('JWT_SECRET environment variable is required');
 }
 
-export const signToken = (payload: jwtPayload): string => {
+export function signToken(payload: jwtPayload): string {
   return jwt.sign(payload, JWT_SECRET, { expiresIn: '1d' });
-};
+}
 
-export const verifyToken = (token: string): jwtPayload => {
+export function verifyToken(token: string): jwtPayload {
   return jwt.verify(token, JWT_SECRET) as jwtPayload;
 };

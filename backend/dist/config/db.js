@@ -16,13 +16,17 @@ pool.on('connect', () => {
 });
 pool.on('error', (err) => {
     console.error('Unexpected error on idle client', err);
-    process.exit(-1);
+    process.exit(1);
 });
 export const query = (text, params) => {
     return pool.query(text, params);
 };
 export const getClient = () => {
     return pool.connect();
+};
+// Ends the pool; only used by one-off scripts (e.g. seed.ts) so they can exit.
+export const closePool = () => {
+    return pool.end();
 };
 // Runs `fn` inside BEGIN/COMMIT, rolling back and releasing the client on any error.
 export const withTransaction = async (fn) => {
