@@ -6,6 +6,7 @@ import {
   cancelAppointmentService,
   deleteAppointmentService,
 } from '../services/appointment.service.js';
+import { listPatientsService } from '../services/patient.service.js';
 import { AppointmentStatus } from '../types/appointment.types.js';
 
 /** List all appointments, ordered by date/time, optionally filtered (admin-facing) */
@@ -22,6 +23,26 @@ export const listAppointments = async (req: Request, res: Response, next: NextFu
     res.status(200).json({
       success: true,
       data: appointments,
+    });
+
+  } catch (error) {
+    next(error);
+  }
+};
+
+/** List all patients, optionally filtered by name/phone/MRN search (admin-facing) */
+export const listPatients = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    // Query already validated by middleware
+    const { search } = req.query as { search?: string };
+
+    const patients = await listPatientsService({
+      ...(search && { search }),
+    });
+
+    res.status(200).json({
+      success: true,
+      data: patients,
     });
 
   } catch (error) {

@@ -11,6 +11,11 @@ export declare const listAppointmentsSchema: z.ZodObject<{
         search: z.ZodOptional<z.ZodString>;
     }, z.core.$strict>;
 }, z.core.$strip>;
+export declare const listPatientsSchema: z.ZodObject<{
+    query: z.ZodObject<{
+        search: z.ZodOptional<z.ZodString>;
+    }, z.core.$strict>;
+}, z.core.$strip>;
 export declare const appointmentIdParamSchema: z.ZodObject<{
     params: z.ZodObject<{
         id: z.ZodCoercedNumber<unknown>;

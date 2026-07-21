@@ -1,0 +1,1 @@
+{"version":3,"file":"patient.service.d.ts","sourceRoot":"","sources":["../../src/services/patient.service.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,OAAO,EAAE,MAAM,2BAA2B,CAAC;AAEpD,MAAM,WAAW,mBAAmB;IAClC,MAAM,CAAC,EAAE,MAAM,CAAC;CACjB;AAED,eAAO,MAAM,mBAAmB,GAAU,SAAS,mBAAmB,KAAG,OAAO,CAAC,OAAO,EAAE,CAsBzF,CAAC"}

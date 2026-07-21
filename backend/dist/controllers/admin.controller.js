@@ -1,4 +1,5 @@
 import { listAppointmentsService, getAppointmentByIdService, confirmAppointmentService, cancelAppointmentService, deleteAppointmentService, } from '../services/appointment.service.js';
+import { listPatientsService } from '../services/patient.service.js';
 /** List all appointments, ordered by date/time, optionally filtered (admin-facing) */
 export const listAppointments = async (req, res, next) => {
     try {
@@ -11,6 +12,23 @@ export const listAppointments = async (req, res, next) => {
         res.status(200).json({
             success: true,
             data: appointments,
+        });
+    }
+    catch (error) {
+        next(error);
+    }
+};
+/** List all patients, optionally filtered by name/phone/MRN search (admin-facing) */
+export const listPatients = async (req, res, next) => {
+    try {
+        // Query already validated by middleware
+        const { search } = req.query;
+        const patients = await listPatientsService({
+            ...(search && { search }),
+        });
+        res.status(200).json({
+            success: true,
+            data: patients,
         });
     }
     catch (error) {

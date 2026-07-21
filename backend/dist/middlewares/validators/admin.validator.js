@@ -8,6 +8,13 @@ export const listAppointmentsSchema = z.object({
     })
         .strict(),
 });
+export const listPatientsSchema = z.object({
+    query: z
+        .object({
+        search: z.string().trim().min(1).optional(),
+    })
+        .strict(),
+});
 export const appointmentIdParamSchema = z.object({
     params: z
         .object({

@@ -25,6 +25,7 @@ mindmap
       ("✅ auth.controller.ts")
     ("services")
       ("✅ appointment.service.ts")
+      ("✅ patient.service.ts")
       ("✅ auth.service.ts")
     ("middlewares")
       ("✅ validate.middleware.ts")
@@ -105,8 +106,8 @@ mindmap
 **If missing:** `app.ts` has nothing to mount at `/api` — every public-facing feature becomes unreachable over HTTP despite every underlying file being correct. This is literally the bug found and fixed earlier in this project: the route existed logically but was never mounted, so `POST /appointments` could not actually be called.
 
 ### `admin.routes.ts` ✅
-**Purpose:** declares the `/admin/*` endpoints — `login`, plus list/view/confirm/cancel/delete appointments.
-**How it works:** `POST /login` is registered **first** (public, validated by `loginSchema`), then `adminRouter.use(authMiddleware)` is called — every route added *after* that line automatically requires a valid admin token, without needing its own protection check. `GET /appointments` (`validate(listAppointmentsSchema)`), `GET /appointments/:id`, `PATCH /appointments/:id/confirm`, `PATCH /appointments/:id/cancel`, and `DELETE /appointments/:id` (all four sharing `validate(appointmentIdParamSchema)`) are registered after that line, so they're protected by construction. This ordering, not a per-route exception list, is the actual protection mechanism.
+**Purpose:** declares the `/admin/*` endpoints — `login`, plus list/view/confirm/cancel/delete appointments and list patients.
+**How it works:** `POST /login` is registered **first** (public, validated by `loginSchema`), then `adminRouter.use(authMiddleware)` is called — every route added *after* that line automatically requires a valid admin token, without needing its own protection check. `GET /appointments` (`validate(listAppointmentsSchema)`), `GET /appointments/:id`, `PATCH /appointments/:id/confirm`, `PATCH /appointments/:id/cancel`, `DELETE /appointments/:id` (all four sharing `validate(appointmentIdParamSchema)`), and `GET /patients` (`validate(listPatientsSchema)`) are registered after that line, so they're protected by construction. This ordering, not a per-route exception list, is the actual protection mechanism.
 **If missing:** no admin controller can be reached over HTTP no matter how complete its implementation is — routes are the only thing binding a URL+method to a controller function.
 
 ---
@@ -119,9 +120,9 @@ mindmap
 **If missing:** `POST /api/appointments` and `GET /api/available-slots` have no handlers to wire into `public.routes.ts` — patients have no way to book, or to see what's bookable, via the API.
 
 ### `admin.controller.ts` ✅
-**Purpose:** the admin dashboard's entire backend surface — list all appointments (optionally filtered), get one by id, and confirm/cancel/delete.
-**How it works:** `listAppointments` reads validated/coerced `req.query.{status,search}` and calls `listAppointmentsService`; the other four read validated/coerced `req.params.id` (a `number`, though Express's own types still say `string` — hence the `as unknown as { id: number }` cast, same reasoning as `req.query` casts elsewhere) and call the matching service function. All five just format the result as JSON or forward errors to `next(error)`.
-**If missing:** clinic staff would have no way to see or act on incoming bookings except querying Postgres by hand.
+**Purpose:** the admin dashboard's entire backend surface — list all appointments (optionally filtered), get one by id, confirm/cancel/delete, and list all patients (optionally filtered).
+**How it works:** `listAppointments`/`listPatients` read validated/coerced `req.query.{status,search}`/`req.query.search` and call `listAppointmentsService`/`listPatientsService`; the other four read validated/coerced `req.params.id` (a `number`, though Express's own types still say `string` — hence the `as unknown as { id: number }` cast, same reasoning as `req.query` casts elsewhere) and call the matching service function. All six just format the result as JSON or forward errors to `next(error)`.
+**If missing:** clinic staff would have no way to see or act on incoming bookings, or see who their patients even are, except querying Postgres by hand.
 
 ### `auth.controller.ts` ✅
 **Purpose:** handler for `POST /admin/login` — delegates credential checking to `auth.service.ts`, returns `{ success, message, token, admin }`.
@@ -136,6 +137,11 @@ mindmap
 **Purpose:** owns every piece of business logic touching the `appointments` table — the transactional booking flow, available-slot computation, and (now) the admin CRUD surface: `createAppointmentService`, `getAvailableSlotsService`, `listAppointmentsService`, `getAppointmentByIdService`, `confirmAppointmentService`, `cancelAppointmentService`, `deleteAppointmentService`.
 **How it works:** `createAppointmentService`, inside `withTransaction`, does an atomic `INSERT ... ON CONFLICT (phone) DO NOTHING RETURNING id` against `patients` (falling back to a `SELECT` by phone only on conflict, so concurrent signups for a brand-new phone number can't create duplicate patients), then inserts the appointment. Outside the transaction, it catches a Postgres `DatabaseError` on the `unique_active_appointment` constraint and rethrows it as an `AppError(409)` with a friendly message. `getAvailableSlotsService` runs a plain (non-transactional) `SELECT appointment_time FROM appointments WHERE appointment_date = $1 AND status IN ('Pending', 'Confirmed')`, then hands the booked times to the pure `utils/generateSlots.ts::generateAvailableSlots`. The admin functions are all plain (non-transactional) single-statement queries: `listAppointmentsService` builds a dynamic `WHERE` clause only for filters actually supplied (`status` exact match, `search` as an `ILIKE` across the joined patient's first/last name and phone) and always `ORDER BY appointment_date, appointment_time`; `getAppointmentByIdService`/`confirmAppointmentService`/`cancelAppointmentService`/`deleteAppointmentService` all throw `AppError('Appointment not found', 404)` when the target row doesn't exist, via a shared internal `updateAppointmentStatusService(id, status)` for the confirm/cancel pair.
 **If missing:** `appointments.controller.ts`/`admin.controller.ts` have nothing to call. There is no other file implementing this logic — booking, slot-listing, and the entire admin dashboard would be entirely broken, and the database's core anti-double-booking design (the partial unique index) would have no code path ever hitting it.
+
+### `patient.service.ts` ✅
+**Purpose:** owns queries over the `patients` table on its own (not joined with `appointments`) — currently just `listPatientsService`, backing the admin dashboard's patients table.
+**How it works:** a plain (non-transactional) `SELECT` directly against `patients`, with the same dynamic-`WHERE`/optional-`search` pattern as `appointment.service.ts::listAppointmentsService` (`ILIKE` across first/last name, phone, and MRN), ordered by `last_name, first_name`.
+**If missing:** `admin.controller.ts::listPatients` has nothing to call — the admin dashboard would have no way to see the patient roster independent of their appointments.
 
 ### `auth.service.ts` ✅
 **Purpose:** looks up an admin row by username, compares the bcrypt hash of the submitted password, and on success signs a JWT via `utils/jwt.ts`.
@@ -177,7 +183,7 @@ mindmap
 **If missing:** `auth.service.ts` could receive `undefined` fields and either crash with an unclear DB/bcrypt error, or waste a round-trip on a comparison that was always going to fail.
 
 ### `middlewares/validators/admin.validator.ts` ✅
-**Purpose:** the two schemas behind every protected admin-appointment route: `listAppointmentsSchema` (optional `status` — must be one of `ALLOWED_APPOINTMENT_STATUSES` — and optional non-empty `search` string) and `appointmentIdParamSchema` (`:id` coerced to a positive integer).
+**Purpose:** the three schemas behind every protected admin route: `listAppointmentsSchema` (optional `status` — must be one of `ALLOWED_APPOINTMENT_STATUSES` — and optional non-empty `search` string), `appointmentIdParamSchema` (`:id` coerced to a positive integer), and `listPatientsSchema` (optional non-empty `search` string only — no `status`, since patients don't have one).
 **How it works:** same `{ query: ... }`/`{ params: ... }` shapes consumed by `validate()` as every other validator; `appointmentIdParamSchema` is reused across all four id-based routes (`get/:id`, `confirm`, `cancel`, `delete`) rather than duplicated per route.
 **If missing:** a non-numeric or negative `:id` would reach Postgres as-is (harmless here since the query just returns no rows → a correct 404, but wastes a round-trip), and an invalid `status` filter value would silently return zero rows instead of a clear 400 telling the caller what went wrong.
 
