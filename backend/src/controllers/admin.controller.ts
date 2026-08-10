@@ -8,16 +8,22 @@ import {
 } from '../services/appointment.service.js';
 import { listPatientsService } from '../services/patient.service.js';
 import { AppointmentStatus } from '../types/appointment.types.js';
+import { DateRangePreset } from '../utils/clinicTime.js';
 
 /** List all appointments, ordered by date/time, optionally filtered (admin-facing) */
 export const listAppointments = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     // Query already validated by middleware
-    const { status, search } = req.query as { status?: AppointmentStatus; search?: string };
+    const { status, search, date_range } = req.query as {
+      status?: AppointmentStatus;
+      search?: string;
+      date_range?: DateRangePreset;
+    };
 
     const appointments = await listAppointmentsService({
       ...(status && { status }),
       ...(search && { search }),
+      ...(date_range && { dateRange: date_range }),
     });
 
     res.status(200).json({

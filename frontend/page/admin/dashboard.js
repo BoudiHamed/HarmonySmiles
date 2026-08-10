@@ -15,6 +15,7 @@ const errorBox = document.getElementById('dashboardError');
 const filterForm = document.getElementById('filterForm');
 const statusFilter = document.getElementById('statusFilter');
 const searchFilter = document.getElementById('searchFilter');
+const dateRangeFilter = document.getElementById('dateRangeFilter');
 
 function showError(message) {
   errorBox.textContent = message;
@@ -82,6 +83,7 @@ async function loadAppointments() {
   const params = new URLSearchParams();
   if (statusFilter.value) params.set('status', statusFilter.value);
   if (searchFilter.value.trim()) params.set('search', searchFilter.value.trim());
+  if (dateRangeFilter.value) params.set('date_range', dateRangeFilter.value);
 
   const query = params.toString();
 
@@ -99,9 +101,14 @@ filterForm.addEventListener('submit', (event) => {
   loadAppointments();
 });
 
+dateRangeFilter.addEventListener('change', () => {
+  loadAppointments();
+});
+
 document.getElementById('clearFiltersBtn').addEventListener('click', () => {
   statusFilter.value = '';
   searchFilter.value = '';
+  dateRangeFilter.value = '';
   loadAppointments();
 });
 

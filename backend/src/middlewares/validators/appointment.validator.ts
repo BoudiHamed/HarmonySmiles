@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { getClinicNow } from "../../utils/clinicTime.js";
+import { getClinicNow, getMaxBookableDate, isClinicClosedOn } from "../../utils/clinicTime.js";
 
 const currentYear = new Date().getFullYear();
 
@@ -16,7 +16,7 @@ export const createAppointmentSchema = z
             error: "First name is required",
           })
           .trim()
-          .min(1, "First name must be at least 1 character")
+          .min(3, "First name must be at least 3 characters")
           .max(50, "First name must be less than 50 characters"),
 
         last_name: z
@@ -24,7 +24,7 @@ export const createAppointmentSchema = z
             error: "Last name is required",
           })
           .trim()
-          .min(1, "Last name must be at least 1 character")
+          .min(3, "Last name must be at least 3 characters")
           .max(50, "Last name must be less than 50 characters"),
 
         phone: z
@@ -115,6 +115,29 @@ export const createAppointmentSchema = z
         code: z.ZodIssueCode.custom,
         path: ["body", "appointment_date"],
         message: "Appointment must be in the future",
+      });
+    }
+
+    const [yearStr, monthStr, dayStr] = data.body.appointment_date.split("-");
+    const appointmentDateOnly = new Date(
+      Number(yearStr),
+      Number(monthStr) - 1,
+      Number(dayStr)
+    );
+
+    if (isClinicClosedOn(appointmentDateOnly)) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["body", "appointment_date"],
+        message: "Clinic is closed on Saturdays and Sundays",
+      });
+    }
+
+    if (appointmentDateOnly > getMaxBookableDate()) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["body", "appointment_date"],
+        message: "Appointments can only be booked up to 1 month in advance",
       });
     }
   });

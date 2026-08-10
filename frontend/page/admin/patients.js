@@ -45,7 +45,7 @@ function renderPatientRows(patients) {
         <td>${escapeHtml(patient.first_name)} ${escapeHtml(patient.last_name)}</td>
         <td>${escapeHtml(patient.phone)}</td>
         <td>${patient.email ? escapeHtml(patient.email) : '—'}</td>
-        <td>${patient.birth_year}</td>
+        <td>${patient.age}</td>
         <td>${escapeHtml(patient.gender)}</td>
         <td>${formatRegisteredDate(patient.created_at)}</td>
       </tr>

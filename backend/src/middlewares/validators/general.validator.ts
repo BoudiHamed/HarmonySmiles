@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { getClinicNow } from '../../utils/clinicTime.js';
+import { getClinicNow, getMaxBookableDate } from '../../utils/clinicTime.js';
 
 export const availableSlotsSchema = z
   .object({
@@ -33,6 +33,14 @@ export const availableSlotsSchema = z
         code: z.ZodIssueCode.custom,
         path: ['query', 'date'],
         message: 'Date must not be in the past',
+      });
+    }
+
+    if (requestedDate > getMaxBookableDate()) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['query', 'date'],
+        message: 'Date must be within 1 month from today',
       });
     }
   });

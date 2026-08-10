@@ -169,18 +169,24 @@
                                 <div class="row g-3 mb-3">
                                     <div class="col-md-6">
                                         <label for="first_name" class="form-label">First Name</label>
-                                        <input type="text" class="form-control" id="first_name" maxlength="50" required>
+                                        <input type="text" class="form-control" id="first_name" minlength="3" maxlength="50" required>
+                                        <div class="invalid-feedback">First name must be at least 3 characters.</div>
                                     </div>
                                     <div class="col-md-6">
                                         <label for="last_name" class="form-label">Last Name</label>
-                                        <input type="text" class="form-control" id="last_name" maxlength="50" required>
+                                        <input type="text" class="form-control" id="last_name" minlength="3" maxlength="50" required>
+                                        <div class="invalid-feedback">Last name must be at least 3 characters.</div>
                                     </div>
                                 </div>
                                 <div class="row g-3 mb-3">
                                     <div class="col-md-6">
                                         <label for="phone" class="form-label">Phone</label>
-                                        <input type="tel" class="form-control" id="phone" placeholder="+41791234567"
-                                            pattern="^\+?[0-9]{10,15}$" required>
+                                        <div class="input-group has-validation">
+                                            <select class="form-select" id="country_code" style="max-width: 8rem; font-size: 0.8rem;" required></select>
+                                            <input type="tel" class="form-control" id="phone" placeholder="791234567"
+                                                pattern="^[0-9]{6,14}$" required>
+                                            <div class="invalid-feedback">Enter a valid phone number for the selected country.</div>
+                                        </div>
                                     </div>
                                     <div class="col-md-6">
                                         <label for="email" class="form-label">Email (optional)</label>
@@ -207,13 +213,15 @@
                                     <div class="col-md-6">
                                         <label for="appointment_date" class="form-label">Date</label>
                                         <input type="date" class="form-control" id="appointment_date" required>
-                                        <div class="form-text slot-hint">Clinic is closed Sundays.</div>
+                                        <div class="invalid-feedback">Clinic is closed Saturdays and Sundays.</div>
+                                        <div class="form-text slot-hint">Closed Saturdays & Sundays. Bookings open up to 1 month ahead.</div>
                                     </div>
                                     <div class="col-md-6">
                                         <label for="appointment_time" class="form-label">Time</label>
                                         <select class="form-select" id="appointment_time" required disabled>
                                             <option value="" selected>Pick a date first</option>
                                         </select>
+                                        <div class="invalid-feedback">Please select a time.</div>
                                     </div>
                                 </div>
                                 <div class="mb-3">
@@ -382,6 +390,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
         crossorigin="anonymous"></script>
+    <script src="./countryCodes.js"></script>
     <script src="./bookappointment.js"></script>
 </body>
 

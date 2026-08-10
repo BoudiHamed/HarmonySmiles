@@ -3,6 +3,7 @@ import { DatabaseError } from 'pg';
 import { Appointment, AppointmentStatus, AppointmentWithPatient, CreateAppointmentDTO } from '../types/appointment.types.js';
 import { AppError } from '../utils/AppError.js';
 import { generateAvailableSlots } from '../utils/generateSlots.js';
+import { DateRangePreset, getDateRangeForPreset } from '../utils/clinicTime.js';
 
 export const createAppointmentService = async (data: CreateAppointmentDTO): Promise<Appointment> => {
   try {
@@ -93,6 +94,7 @@ export const getAvailableSlotsService = async (date: string): Promise<string[]> 
 export interface ListAppointmentsFilters {
   status?: AppointmentStatus;
   search?: string;
+  dateRange?: DateRangePreset;
 }
 
 export const listAppointmentsService = async (filters: ListAppointmentsFilters): Promise<AppointmentWithPatient[]> => {
@@ -109,6 +111,12 @@ export const listAppointmentsService = async (filters: ListAppointmentsFilters):
     conditions.push(
       `(p.first_name ILIKE $${params.length} OR p.last_name ILIKE $${params.length} OR p.phone ILIKE $${params.length})`
     );
+  }
+
+  if (filters.dateRange) {
+    const { from, to } = getDateRangeForPreset(filters.dateRange);
+    params.push(from, to);
+    conditions.push(`a.appointment_date BETWEEN $${params.length - 1} AND $${params.length}`);
   }
 
   const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
