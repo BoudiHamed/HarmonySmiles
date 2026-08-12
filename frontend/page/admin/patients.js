@@ -42,7 +42,9 @@ function renderPatientRows(patients) {
     .map((patient) => `
       <tr>
         <td>${escapeHtml(patient.medical_record_number)}</td>
-        <td>${escapeHtml(patient.first_name)} ${escapeHtml(patient.last_name)}</td>
+        <td>
+          <a href="patient-profile.html?id=${patient.id}" class="patient-name-link">${escapeHtml(patient.first_name)} ${escapeHtml(patient.last_name)}</a>
+        </td>
         <td>${escapeHtml(patient.phone)}</td>
         <td>${patient.email ? escapeHtml(patient.email) : '—'}</td>
         <td>${patient.age}</td>

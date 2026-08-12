@@ -29,3 +29,14 @@ export const appointmentIdParamSchema = z.object({
     })
     .strict(),
 });
+
+export const patientIdParamSchema = z.object({
+  params: z
+    .object({
+      id: z.coerce
+        .number({ error: 'Patient id is required' })
+        .int('Patient id must be an integer')
+        .positive('Patient id must be positive'),
+    })
+    .strict(),
+});

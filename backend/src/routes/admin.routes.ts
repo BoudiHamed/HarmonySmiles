@@ -7,6 +7,7 @@ import {
   cancelAppointment,
   deleteAppointment,
   listPatients,
+  getPatientProfile,
 } from '../controllers/admin.controller.js';
 import { validate } from '../middlewares/validate.middleware.js';
 import { loginSchema } from '../middlewares/validators/login.validator.js';
@@ -14,6 +15,7 @@ import {
   listAppointmentsSchema,
   appointmentIdParamSchema,
   listPatientsSchema,
+  patientIdParamSchema,
 } from '../middlewares/validators/admin.validator.js';
 import { authMiddleware } from '../middlewares/auth.middleware.js';
 
@@ -30,3 +32,4 @@ adminRouter.patch('/appointments/:id/confirm', validate(appointmentIdParamSchema
 adminRouter.patch('/appointments/:id/cancel', validate(appointmentIdParamSchema), cancelAppointment);
 adminRouter.delete('/appointments/:id', validate(appointmentIdParamSchema), deleteAppointment);
 adminRouter.get('/patients', validate(listPatientsSchema), listPatients);
+adminRouter.get('/patients/:id', validate(patientIdParamSchema), getPatientProfile);

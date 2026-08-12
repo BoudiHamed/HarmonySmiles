@@ -133,6 +133,26 @@ export const listAppointmentsService = async (filters: ListAppointmentsFilters):
   return result.rows;
 };
 
+export interface PatientAppointmentsSplit {
+  upcoming: Appointment[];
+  past: Appointment[];
+}
+
+// All of a patient's appointments (any status), split into upcoming vs past for a profile view.
+export const listAppointmentsByPatientIdService = async (patientId: number): Promise<PatientAppointmentsSplit> => {
+  const result = await query<Appointment>(
+    `SELECT * FROM appointments WHERE patient_id = $1 ORDER BY appointment_date, appointment_time`,
+    [patientId]
+  );
+
+  const { from: todayStr } = getDateRangeForPreset('today');
+
+  return {
+    upcoming: result.rows.filter((a) => a.appointment_date >= todayStr),
+    past: result.rows.filter((a) => a.appointment_date < todayStr),
+  };
+};
+
 export const getAppointmentByIdService = async (id: number): Promise<AppointmentWithPatient> => {
   const result = await query<AppointmentWithPatient>(
     `SELECT a.*, p.first_name, p.last_name, p.phone, p.medical_record_number

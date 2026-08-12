@@ -5,8 +5,9 @@ import {
   confirmAppointmentService,
   cancelAppointmentService,
   deleteAppointmentService,
+  listAppointmentsByPatientIdService,
 } from '../services/appointment.service.js';
-import { listPatientsService } from '../services/patient.service.js';
+import { listPatientsService, getPatientByIdService } from '../services/patient.service.js';
 import { AppointmentStatus } from '../types/appointment.types.js';
 import { DateRangePreset } from '../utils/clinicTime.js';
 
@@ -49,6 +50,28 @@ export const listPatients = async (req: Request, res: Response, next: NextFuncti
     res.status(200).json({
       success: true,
       data: patients,
+    });
+
+  } catch (error) {
+    next(error);
+  }
+};
+
+/** Get a single patient's full profile: their info plus appointment history, split upcoming/past (admin-facing) */
+export const getPatientProfile = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const { id } = req.params as unknown as { id: number };
+
+    const patient = await getPatientByIdService(id);
+    const { upcoming, past } = await listAppointmentsByPatientIdService(id);
+
+    res.status(200).json({
+      success: true,
+      data: {
+        patient,
+        upcomingAppointments: upcoming,
+        pastAppointments: past,
+      },
     });
 
   } catch (error) {

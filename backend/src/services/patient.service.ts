@@ -1,6 +1,7 @@
 import { query } from '../config/db.js';
 import { Patient } from '../types/patient.types.js';
 import { getClinicNow } from '../utils/clinicTime.js';
+import { AppError } from '../utils/AppError.js';
 
 export interface ListPatientsFilters {
   search?: string;
@@ -35,4 +36,21 @@ export const listPatientsService = async (filters: ListPatientsFilters): Promise
   );
 
   return result.rows;
+};
+
+export const getPatientByIdService = async (id: number): Promise<Patient> => {
+  const result = await query<Patient>(
+    `SELECT id, medical_record_number, first_name, last_name, phone,
+            ($2::int - birth_year) AS age, gender, email, created_at, updated_at
+     FROM patients
+     WHERE id = $1`,
+    [id, getClinicNow().getFullYear()]
+  );
+
+  const [patient] = result.rows;
+  if (!patient) {
+    throw new AppError('Patient not found', 404);
+  }
+
+  return patient;
 };

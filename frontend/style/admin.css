@@ -56,6 +56,17 @@
   color: var(--white);
 }
 
+.patient-name-link {
+  color: #000;
+  text-decoration: none;
+}
+
+.patient-name-link:hover,
+.patient-name-link:focus {
+  color: var(--blue);
+  text-decoration: underline;
+}
+
 /* SIDEBAR */
 .admin-layout {
   display: flex;
