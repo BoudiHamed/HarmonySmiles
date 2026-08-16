@@ -1,2 +1,0 @@
-# HarmonySmiles
-Dental Clinic

@@ -1,0 +1,14 @@
+.booking-card {
+  background-color: var(--white);
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+}
+
+#appointment_time:disabled {
+  background-color: var(--light-gray);
+}
+
+.slot-hint {
+  font-size: 0.9rem;
+}

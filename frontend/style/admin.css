@@ -1,0 +1,117 @@
+.admin-body {
+  background-color: var(--light-gray);
+  min-height: 100vh;
+}
+
+/* LOGIN */
+.admin-login-main {
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.admin-login-card {
+  background-color: var(--white);
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  padding: 40px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.btn-sh-admin {
+  font-size: 1.1rem;
+  padding: 10px 20px;
+  border-radius: 40px;
+  background-color: var(--gold);
+  border: none;
+}
+
+.btn-sh-admin:hover {
+  box-shadow: 0px 0px 10px var(--gold);
+}
+
+/* DASHBOARD */
+.admin-header {
+  background-color: var(--white);
+  border-bottom: 1px solid var(--light-gray);
+  min-height: 90px;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 15px 30px;
+}
+
+.admin-header h1 {
+  color: var(--blue);
+}
+
+.admin-table {
+  background-color: var(--white);
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.admin-table thead {
+  background-color: var(--blue);
+  color: var(--white);
+}
+
+.patient-name-link {
+  color: #000;
+  text-decoration: none;
+}
+
+.patient-name-link:hover,
+.patient-name-link:focus {
+  color: var(--blue);
+  text-decoration: underline;
+}
+
+/* SIDEBAR */
+.admin-layout {
+  display: flex;
+  align-items: stretch;
+  min-height: calc(100vh - 90px);
+}
+
+.admin-sidebar {
+  width: 90px;
+  flex-shrink: 0;
+  background-color: var(--white);
+  border-right: 1px solid var(--light-gray);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding-top: 20px;
+}
+
+.admin-sidebar-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 16px 4px;
+  color: var(--blue);
+  text-decoration: none;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.admin-sidebar-link i {
+  font-size: 1.3rem;
+}
+
+.admin-sidebar-link:hover {
+  background-color: var(--light-gray);
+  color: var(--blue);
+}
+
+.admin-sidebar-link.active {
+  background-color: var(--gold);
+  font-weight: 600;
+}
+
+.admin-main {
+  flex: 1;
+  min-width: 0;
+}
