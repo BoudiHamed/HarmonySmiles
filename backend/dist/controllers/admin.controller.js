@@ -1,13 +1,14 @@
-import { listAppointmentsService, getAppointmentByIdService, confirmAppointmentService, cancelAppointmentService, deleteAppointmentService, } from '../services/appointment.service.js';
-import { listPatientsService } from '../services/patient.service.js';
+import { listAppointmentsService, getAppointmentByIdService, confirmAppointmentService, cancelAppointmentService, completeAppointmentService, noShowAppointmentService, deleteAppointmentService, listAppointmentsByPatientIdService, } from '../services/appointment.service.js';
+import { listPatientsService, getPatientByIdService } from '../services/patient.service.js';
 /** List all appointments, ordered by date/time, optionally filtered (admin-facing) */
 export const listAppointments = async (req, res, next) => {
     try {
         // Query already validated by middleware
-        const { status, search } = req.query;
+        const { status, search, date_range } = req.query;
         const appointments = await listAppointmentsService({
             ...(status && { status }),
             ...(search && { search }),
+            ...(date_range && { dateRange: date_range }),
         });
         res.status(200).json({
             success: true,
@@ -29,6 +30,25 @@ export const listPatients = async (req, res, next) => {
         res.status(200).json({
             success: true,
             data: patients,
+        });
+    }
+    catch (error) {
+        next(error);
+    }
+};
+/** Get a single patient's full profile: their info plus appointment history, split upcoming/past (admin-facing) */
+export const getPatientProfile = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const patient = await getPatientByIdService(id);
+        const { upcoming, past } = await listAppointmentsByPatientIdService(id);
+        res.status(200).json({
+            success: true,
+            data: {
+                patient,
+                upcomingAppointments: upcoming,
+                pastAppointments: past,
+            },
         });
     }
     catch (error) {
@@ -73,6 +93,36 @@ export const cancelAppointment = async (req, res, next) => {
         res.status(200).json({
             success: true,
             message: 'Appointment cancelled',
+            data: appointment,
+        });
+    }
+    catch (error) {
+        next(error);
+    }
+};
+/** Set an appointment's status to Completed (admin-facing) — only once its date/time has arrived */
+export const completeAppointment = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const appointment = await completeAppointmentService(id);
+        res.status(200).json({
+            success: true,
+            message: 'Appointment completed',
+            data: appointment,
+        });
+    }
+    catch (error) {
+        next(error);
+    }
+};
+/** Set an appointment's status to NoShow (admin-facing) — only once its date/time has arrived */
+export const noShowAppointment = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const appointment = await noShowAppointmentService(id);
+        res.status(200).json({
+            success: true,
+            message: 'Appointment marked as no-show',
             data: appointment,
         });
     }

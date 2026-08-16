@@ -5,6 +5,8 @@ import {
   getAppointmentById,
   confirmAppointment,
   cancelAppointment,
+  completeAppointment,
+  noShowAppointment,
   deleteAppointment,
   listPatients,
   getPatientProfile,
@@ -30,6 +32,8 @@ adminRouter.get('/appointments', validate(listAppointmentsSchema), listAppointme
 adminRouter.get('/appointments/:id', validate(appointmentIdParamSchema), getAppointmentById);
 adminRouter.patch('/appointments/:id/confirm', validate(appointmentIdParamSchema), confirmAppointment);
 adminRouter.patch('/appointments/:id/cancel', validate(appointmentIdParamSchema), cancelAppointment);
+adminRouter.patch('/appointments/:id/complete', validate(appointmentIdParamSchema), completeAppointment);
+adminRouter.patch('/appointments/:id/no-show', validate(appointmentIdParamSchema), noShowAppointment);
 adminRouter.delete('/appointments/:id', validate(appointmentIdParamSchema), deleteAppointment);
 adminRouter.get('/patients', validate(listPatientsSchema), listPatients);
 adminRouter.get('/patients/:id', validate(patientIdParamSchema), getPatientProfile);

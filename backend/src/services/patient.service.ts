@@ -31,7 +31,7 @@ export const listPatientsService = async (filters: ListPatientsFilters): Promise
             (${currentYearParam}::int - birth_year) AS age, gender, email, created_at, updated_at
      FROM patients
      ${whereClause}
-     ORDER BY last_name, first_name`,
+     ORDER BY medical_record_number`,
     params
   );
 

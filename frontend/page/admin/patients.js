@@ -1,7 +1,3 @@
-if (!getToken()) {
-  window.location.href = './login.html';
-}
-
 const patientsBody = document.getElementById('patientsBody');
 const errorBox = document.getElementById('dashboardError');
 const patientFilterForm = document.getElementById('patientFilterForm');
@@ -24,12 +20,6 @@ function formatRegisteredDate(dateString) {
     month: 'short',
     year: 'numeric',
   });
-}
-
-function escapeHtml(value) {
-  const div = document.createElement('div');
-  div.textContent = value;
-  return div.innerHTML;
 }
 
 function renderPatientRows(patients) {
@@ -81,11 +71,6 @@ patientFilterForm.addEventListener('submit', (event) => {
 document.getElementById('clearPatientFiltersBtn').addEventListener('click', () => {
   patientSearchFilter.value = '';
   loadPatients();
-});
-
-document.getElementById('logoutBtn').addEventListener('click', () => {
-  clearToken();
-  window.location.href = './login.html';
 });
 
 loadPatients();

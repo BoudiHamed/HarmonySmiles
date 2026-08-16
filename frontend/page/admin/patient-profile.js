@@ -1,7 +1,3 @@
-if (!getToken()) {
-  window.location.href = './login.html';
-}
-
 const STATUS_BADGE_CLASS = {
   Pending: 'bg-warning text-dark',
   Confirmed: 'bg-success',
@@ -45,12 +41,6 @@ function formatRegisteredDate(dateString) {
   });
 }
 
-function escapeHtml(value) {
-  const div = document.createElement('div');
-  div.textContent = value;
-  return div.innerHTML;
-}
-
 function renderAppointmentRows(tbody, appointments, emptyMessage) {
   if (appointments.length === 0) {
     tbody.innerHTML = `<tr><td colspan="4" class="text-center text-muted py-4">${emptyMessage}</td></tr>`;
@@ -63,7 +53,7 @@ function renderAppointmentRows(tbody, appointments, emptyMessage) {
         <td>${formatDate(appointment.appointment_date)}</td>
         <td>${formatTime(appointment.appointment_time)}</td>
         <td>${appointment.visit_reason ? escapeHtml(appointment.visit_reason) : '—'}</td>
-        <td><span class="badge ${STATUS_BADGE_CLASS[appointment.status] || 'bg-secondary'}">${appointment.status}</span></td>
+        <td><span class="badge ${STATUS_BADGE_CLASS[appointment.status] || 'bg-secondary'}">${escapeHtml(appointment.status)}</span></td>
       </tr>
     `)
     .join('');
@@ -99,10 +89,5 @@ async function loadProfile() {
     showError(error.message);
   }
 }
-
-document.getElementById('logoutBtn').addEventListener('click', () => {
-  clearToken();
-  window.location.href = './login.html';
-});
 
 loadProfile();

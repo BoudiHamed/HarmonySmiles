@@ -17,7 +17,7 @@
 <body class="admin-body">
     <!-- HEADER -->
     <header class="admin-header d-flex align-items-center justify-content-between">
-        <a href="../../index.html">
+        <a href="../../page/admin/dashboard.html">
             <img class="logo" src="../../assets/img/logoclinicadental.png" alt="Harmony Smiles logo" loading="lazy">
         </a>
         <h1 class="h4 mb-0">Appointments Dashboard</h1>
@@ -60,6 +60,8 @@
                     <label for="dateRangeFilter" class="form-label">Time</label>
                     <select id="dateRangeFilter" class="form-select">
                         <option value="">All</option>
+                        <option value="previous">Previous</option>
+                        <option value="upcoming" selected>Upcoming</option>
                         <option value="today">Today</option>
                         <option value="tomorrow">Tomorrow</option>
                         <option value="week">This Week</option>
@@ -71,7 +73,7 @@
                     <input type="text" id="searchFilter" class="form-control" placeholder="e.g. Jane or +41...">
                 </div>
                 <div class="col-auto">
-                    <button type="submit" class="btn btn-sh-admin">Apply</button>
+                    <button type="submit" class="btn btn-sh-admin">Search</button>
                 </div>
                 <div class="col-auto">
                     <button type="button" id="clearFiltersBtn" class="btn btn-outline-secondary">Clear</button>
@@ -108,6 +110,7 @@
         integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
         crossorigin="anonymous"></script>
     <script src="./admin-api.js"></script>
+    <script src="./admin-common.js"></script>
     <script src="./dashboard.js"></script>
 </body>
 

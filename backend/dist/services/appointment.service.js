@@ -2,6 +2,7 @@ import { query, withTransaction } from '../config/db.js';
 import { DatabaseError } from 'pg';
 import { AppError } from '../utils/AppError.js';
 import { generateAvailableSlots } from '../utils/generateSlots.js';
+import { getDateRangeForPreset, getClinicNowDateTime, getClinicTodayISODate, hasAppointmentDateTimePassed, } from '../utils/clinicTime.js';
 export const createAppointmentService = async (data) => {
     try {
         return await withTransaction(async (client) => {
@@ -73,7 +74,17 @@ export const getAvailableSlotsService = async (date) => {
     const bookedTimes = bookedRes.rows.map((row) => row.appointment_time);
     return generateAvailableSlots(date, bookedTimes);
 };
+// Flip any still-Pending/Confirmed appointment whose date+time has already passed to NoShow.
+// Admin can still correct a wrongly-flagged one back via completeAppointmentService.
+const markPastAppointmentsAsNoShow = async () => {
+    const { date, time } = getClinicNowDateTime();
+    await query(`UPDATE appointments
+     SET status = 'NoShow', updated_at = now()
+     WHERE status IN ('Pending', 'Confirmed')
+       AND (appointment_date < $1 OR (appointment_date = $1 AND appointment_time < $2))`, [date, time]);
+};
 export const listAppointmentsService = async (filters) => {
+    await markPastAppointmentsAsNoShow();
     const conditions = [];
     const params = [];
     if (filters.status) {
@@ -84,6 +95,17 @@ export const listAppointmentsService = async (filters) => {
         params.push(`%${filters.search}%`);
         conditions.push(`(p.first_name ILIKE $${params.length} OR p.last_name ILIKE $${params.length} OR p.phone ILIKE $${params.length})`);
     }
+    if (filters.dateRange) {
+        const { from, to } = getDateRangeForPreset(filters.dateRange);
+        if (from !== undefined) {
+            params.push(from);
+            conditions.push(`a.appointment_date >= $${params.length}`);
+        }
+        if (to !== undefined) {
+            params.push(to);
+            conditions.push(`a.appointment_date <= $${params.length}`);
+        }
+    }
     const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
     const result = await query(`SELECT a.*, p.first_name, p.last_name, p.phone, p.medical_record_number
      FROM appointments a
@@ -92,7 +114,18 @@ export const listAppointmentsService = async (filters) => {
      ORDER BY a.appointment_date, a.appointment_time`, params);
     return result.rows;
 };
+// All of a patient's appointments (any status), split into upcoming vs past for a profile view.
+export const listAppointmentsByPatientIdService = async (patientId) => {
+    await markPastAppointmentsAsNoShow();
+    const result = await query(`SELECT * FROM appointments WHERE patient_id = $1 ORDER BY appointment_date, appointment_time`, [patientId]);
+    const todayStr = getClinicTodayISODate();
+    return {
+        upcoming: result.rows.filter((a) => a.appointment_date >= todayStr),
+        past: result.rows.filter((a) => a.appointment_date < todayStr),
+    };
+};
 export const getAppointmentByIdService = async (id) => {
+    await markPastAppointmentsAsNoShow();
     const result = await query(`SELECT a.*, p.first_name, p.last_name, p.phone, p.medical_record_number
      FROM appointments a
      JOIN patients p ON p.id = a.patient_id
@@ -111,8 +144,48 @@ const updateAppointmentStatusService = async (id, status) => {
     }
     return appointment;
 };
-export const confirmAppointmentService = (id) => updateAppointmentStatusService(id, 'Confirmed');
+// Re-confirming an old Cancelled/Completed/NoShow appointment can collide with a different
+// appointment that has since taken its date+time slot — catch that the same way
+// createAppointmentService does, instead of letting the raw constraint violation surface as a 500.
+export const confirmAppointmentService = async (id) => {
+    try {
+        return await updateAppointmentStatusService(id, 'Confirmed');
+    }
+    catch (error) {
+        if (error instanceof DatabaseError && error.constraint === 'unique_active_appointment') {
+            throw new AppError('That slot is already booked by another appointment.', 409);
+        }
+        throw error;
+    }
+};
 export const cancelAppointmentService = (id) => updateAppointmentStatusService(id, 'Cancelled');
+// Only allowed once the appointment's own date+time has arrived — an appointment can't be
+// marked completed ahead of when it's actually scheduled to happen.
+export const completeAppointmentService = async (id) => {
+    const result = await query('SELECT * FROM appointments WHERE id = $1', [id]);
+    const [appointment] = result.rows;
+    if (!appointment) {
+        throw new AppError('Appointment not found', 404);
+    }
+    if (!hasAppointmentDateTimePassed(appointment.appointment_date, appointment.appointment_time)) {
+        throw new AppError('Cannot mark an appointment as completed before its scheduled date and time', 409);
+    }
+    return updateAppointmentStatusService(id, 'Completed');
+};
+// Same time gate as completeAppointmentService — a patient can't be marked as having missed
+// an appointment that hasn't happened yet. Lets an admin apply NoShow immediately rather
+// than waiting for the next markPastAppointmentsAsNoShow sweep.
+export const noShowAppointmentService = async (id) => {
+    const result = await query('SELECT * FROM appointments WHERE id = $1', [id]);
+    const [appointment] = result.rows;
+    if (!appointment) {
+        throw new AppError('Appointment not found', 404);
+    }
+    if (!hasAppointmentDateTimePassed(appointment.appointment_date, appointment.appointment_time)) {
+        throw new AppError('Cannot mark an appointment as no-show before its scheduled date and time', 409);
+    }
+    return updateAppointmentStatusService(id, 'NoShow');
+};
 export const deleteAppointmentService = async (id) => {
     const result = await query('DELETE FROM appointments WHERE id = $1 RETURNING id', [id]);
     if (result.rows.length === 0) {

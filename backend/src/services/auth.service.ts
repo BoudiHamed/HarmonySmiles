@@ -5,6 +5,11 @@ import { AppError } from '../utils/AppError.js';
 import { loginInput, loginResponse } from '../types/auth.types.js';
 import { AdminWithPassword } from '../types/admin.types.js';
 
+// Precomputed hash of an arbitrary password, compared against on a "no such user" login attempt
+// so that path takes the same ~bcrypt-compare time as a real "wrong password" attempt — otherwise
+// the faster response for an unknown username leaks which usernames exist via a timing side-channel.
+const DUMMY_PASSWORD_HASH = '$2b$10$42q6H/XUCvNMGlyuPcCmKOdB2hvF0oCzVdVz8bCRK1Vn5CCdfkquu';
+
 export const loginService = async (input: loginInput): Promise<loginResponse> => {
   const adminRes = await query(
     'SELECT id, username, password_hash, created_at FROM admins WHERE username = $1 LIMIT 1',
@@ -13,12 +18,8 @@ export const loginService = async (input: loginInput): Promise<loginResponse> =>
   const [admin] = adminRes.rows as AdminWithPassword[];
 
   // Same error for "no such user" and "wrong password" so we never reveal which one was wrong.
-  if (!admin) {
-    throw new AppError('Invalid username or password', 401);
-  }
-
-  const passwordMatches = await bcrypt.compare(input.password, admin.password_hash);
-  if (!passwordMatches) {
+  const passwordMatches = await bcrypt.compare(input.password, admin?.password_hash ?? DUMMY_PASSWORD_HASH);
+  if (!admin || !passwordMatches) {
     throw new AppError('Invalid username or password', 401);
   }
 

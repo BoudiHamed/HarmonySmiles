@@ -4,6 +4,8 @@ import {
   getAppointmentByIdService,
   confirmAppointmentService,
   cancelAppointmentService,
+  completeAppointmentService,
+  noShowAppointmentService,
   deleteAppointmentService,
   listAppointmentsByPatientIdService,
 } from '../services/appointment.service.js';
@@ -125,6 +127,42 @@ export const cancelAppointment = async (req: Request, res: Response, next: NextF
     res.status(200).json({
       success: true,
       message: 'Appointment cancelled',
+      data: appointment,
+    });
+
+  } catch (error) {
+    next(error);
+  }
+};
+
+/** Set an appointment's status to Completed (admin-facing) — only once its date/time has arrived */
+export const completeAppointment = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const { id } = req.params as unknown as { id: number };
+
+    const appointment = await completeAppointmentService(id);
+
+    res.status(200).json({
+      success: true,
+      message: 'Appointment completed',
+      data: appointment,
+    });
+
+  } catch (error) {
+    next(error);
+  }
+};
+
+/** Set an appointment's status to NoShow (admin-facing) — only once its date/time has arrived */
+export const noShowAppointment = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const { id } = req.params as unknown as { id: number };
+
+    const appointment = await noShowAppointmentService(id);
+
+    res.status(200).json({
+      success: true,
+      message: 'Appointment marked as no-show',
       data: appointment,
     });
 

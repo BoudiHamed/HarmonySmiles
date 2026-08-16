@@ -9,6 +9,14 @@ export declare const listAppointmentsSchema: z.ZodObject<{
             NoShow: "NoShow";
         }>>;
         search: z.ZodOptional<z.ZodString>;
+        date_range: z.ZodOptional<z.ZodEnum<{
+            today: "today";
+            tomorrow: "tomorrow";
+            week: "week";
+            month: "month";
+            upcoming: "upcoming";
+            previous: "previous";
+        }>>;
     }, z.core.$strict>;
 }, z.core.$strip>;
 export declare const listPatientsSchema: z.ZodObject<{
@@ -17,6 +25,11 @@ export declare const listPatientsSchema: z.ZodObject<{
     }, z.core.$strict>;
 }, z.core.$strip>;
 export declare const appointmentIdParamSchema: z.ZodObject<{
+    params: z.ZodObject<{
+        id: z.ZodCoercedNumber<unknown>;
+    }, z.core.$strict>;
+}, z.core.$strip>;
+export declare const patientIdParamSchema: z.ZodObject<{
     params: z.ZodObject<{
         id: z.ZodCoercedNumber<unknown>;
     }, z.core.$strict>;

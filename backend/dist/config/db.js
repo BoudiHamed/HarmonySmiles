@@ -1,6 +1,12 @@
 import pg from 'pg';
 import dotenv from 'dotenv';
 dotenv.config();
+// DATE columns (OID 1082, e.g. appointments.appointment_date) are a pure calendar date with
+// no time-of-day meaning. pg's default parser turns them into a JS Date at LOCAL server
+// midnight, which then serializes to a UTC ISO string that silently shifts a day whenever the
+// server's own OS timezone isn't UTC (this dev machine is Africa/Cairo, UTC+3) — return the raw
+// 'YYYY-MM-DD' text instead so no timezone conversion ever happens on the way out.
+pg.types.setTypeParser(1082, (value) => value);
 const pool = new pg.Pool({
     user: process.env.DB_USER,
     host: process.env.DB_HOST,

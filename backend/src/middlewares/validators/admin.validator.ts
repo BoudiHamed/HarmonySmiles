@@ -6,7 +6,7 @@ export const listAppointmentsSchema = z.object({
     .object({
       status: z.enum(ALLOWED_APPOINTMENT_STATUSES).optional(),
       search: z.string().trim().min(1).optional(),
-      date_range: z.enum(['today', 'tomorrow', 'week', 'month']).optional(),
+      date_range: z.enum(['today', 'tomorrow', 'week', 'month', 'upcoming', 'previous']).optional(),
     })
     .strict(),
 });

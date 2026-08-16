@@ -18,7 +18,11 @@ const WEEKEND_DAYS = [0, 6]; // Sunday, Saturday
 // Today (browser-local) as a UX hint only — the backend is the source of
 // truth for "future" and "clinic open" checks, in the clinic's own timezone.
 const today = new Date();
-const oneMonthOut = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
+// "Same day next month", clamped to that month's last day — a naive `getMonth() + 1` on e.g.
+// Jan 31 would otherwise overflow into March (Feb only has 28/29 days).
+const oneMonthOutTargetMonth = today.getMonth() + 1;
+const oneMonthOutLastDay = new Date(today.getFullYear(), oneMonthOutTargetMonth + 1, 0).getDate();
+const oneMonthOut = new Date(today.getFullYear(), oneMonthOutTargetMonth, Math.min(today.getDate(), oneMonthOutLastDay));
 dateInput.min = today.toISOString().split('T')[0];
 dateInput.max = oneMonthOut.toISOString().split('T')[0];
 birthYearInput.max = String(today.getFullYear());
@@ -130,7 +134,17 @@ function validateForm() {
 
   const localPhone = phoneInput.value.trim().replace(/^0+/, '');
   const fullPhone = `${countryCodeSelect.value}${localPhone}`;
-  isValid = setFieldValidity(phoneInput, /^\+[0-9]{9,15}$/.test(fullPhone)) && isValid;
+  // Matches the backend's /^\+?[0-9]{10,15}$/ (10-15 digits) so a value accepted here never
+  // turns into a confusing backend rejection.
+  isValid = setFieldValidity(phoneInput, /^\+[0-9]{10,15}$/.test(fullPhone)) && isValid;
+
+  const birthYear = Number(birthYearInput.value);
+  const birthYearValid =
+    Boolean(birthYearInput.value) && Number.isInteger(birthYear) && birthYear >= 1900 && birthYear <= today.getFullYear();
+  isValid = setFieldValidity(birthYearInput, birthYearValid) && isValid;
+
+  const genderSelect = document.getElementById('gender');
+  isValid = setFieldValidity(genderSelect, Boolean(genderSelect.value)) && isValid;
 
   const dateValid = Boolean(dateInput.value) && !isWeekend(dateInput.value) && dateInput.value <= dateInput.max;
   isValid = setFieldValidity(dateInput, dateValid) && isValid;

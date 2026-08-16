@@ -3,7 +3,7 @@ export type AppointmentStatus = 'Pending' | 'Confirmed' | 'Cancelled' | 'Complet
 export interface Appointment {
     id: number;
     patient_id: number;
-    appointment_date: Date;
+    appointment_date: string;
     appointment_time: string;
     visit_reason: string | null;
     status: AppointmentStatus;
@@ -12,6 +12,11 @@ export interface Appointment {
     updated_at: Date;
 }
 export interface AppointmentWithPatient extends Appointment, Pick<Patient, 'first_name' | 'last_name' | 'phone' | 'medical_record_number'> {
+}
+export interface PatientProfile {
+    patient: Patient;
+    upcomingAppointments: Appointment[];
+    pastAppointments: Appointment[];
 }
 export interface CreateAppointmentDTO {
     first_name: string;

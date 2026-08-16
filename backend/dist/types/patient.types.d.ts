@@ -4,7 +4,7 @@ export interface Patient {
     first_name: string;
     last_name: string;
     phone: string;
-    birth_year: number;
+    age: number;
     gender: 'Male' | 'Female';
     email: string | null;
     created_at: Date;
@@ -14,7 +14,7 @@ export interface CreatePatientDTO {
     first_name: string;
     last_name: string;
     phone: string;
-    birth_year: number;
+    age: number;
     gender: 'Male' | 'Female';
     email?: string;
 }

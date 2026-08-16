@@ -3,7 +3,13 @@ import { DatabaseError } from 'pg';
 import { Appointment, AppointmentStatus, AppointmentWithPatient, CreateAppointmentDTO } from '../types/appointment.types.js';
 import { AppError } from '../utils/AppError.js';
 import { generateAvailableSlots } from '../utils/generateSlots.js';
-import { DateRangePreset, getDateRangeForPreset } from '../utils/clinicTime.js';
+import {
+  DateRangePreset,
+  getDateRangeForPreset,
+  getClinicNowDateTime,
+  getClinicTodayISODate,
+  hasAppointmentDateTimePassed,
+} from '../utils/clinicTime.js';
 
 export const createAppointmentService = async (data: CreateAppointmentDTO): Promise<Appointment> => {
   try {
@@ -91,6 +97,19 @@ export const getAvailableSlotsService = async (date: string): Promise<string[]> 
   return generateAvailableSlots(date, bookedTimes);
 };
 
+// Flip any still-Pending/Confirmed appointment whose date+time has already passed to NoShow.
+// Admin can still correct a wrongly-flagged one back via completeAppointmentService.
+const markPastAppointmentsAsNoShow = async (): Promise<void> => {
+  const { date, time } = getClinicNowDateTime();
+  await query(
+    `UPDATE appointments
+     SET status = 'NoShow', updated_at = now()
+     WHERE status IN ('Pending', 'Confirmed')
+       AND (appointment_date < $1 OR (appointment_date = $1 AND appointment_time < $2))`,
+    [date, time]
+  );
+};
+
 export interface ListAppointmentsFilters {
   status?: AppointmentStatus;
   search?: string;
@@ -98,6 +117,8 @@ export interface ListAppointmentsFilters {
 }
 
 export const listAppointmentsService = async (filters: ListAppointmentsFilters): Promise<AppointmentWithPatient[]> => {
+  await markPastAppointmentsAsNoShow();
+
   const conditions: string[] = [];
   const params: unknown[] = [];
 
@@ -115,8 +136,16 @@ export const listAppointmentsService = async (filters: ListAppointmentsFilters):
 
   if (filters.dateRange) {
     const { from, to } = getDateRangeForPreset(filters.dateRange);
-    params.push(from, to);
-    conditions.push(`a.appointment_date BETWEEN $${params.length - 1} AND $${params.length}`);
+
+    if (from !== undefined) {
+      params.push(from);
+      conditions.push(`a.appointment_date >= $${params.length}`);
+    }
+
+    if (to !== undefined) {
+      params.push(to);
+      conditions.push(`a.appointment_date <= $${params.length}`);
+    }
   }
 
   const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
@@ -140,12 +169,14 @@ export interface PatientAppointmentsSplit {
 
 // All of a patient's appointments (any status), split into upcoming vs past for a profile view.
 export const listAppointmentsByPatientIdService = async (patientId: number): Promise<PatientAppointmentsSplit> => {
+  await markPastAppointmentsAsNoShow();
+
   const result = await query<Appointment>(
     `SELECT * FROM appointments WHERE patient_id = $1 ORDER BY appointment_date, appointment_time`,
     [patientId]
   );
 
-  const { from: todayStr } = getDateRangeForPreset('today');
+  const todayStr = getClinicTodayISODate();
 
   return {
     upcoming: result.rows.filter((a) => a.appointment_date >= todayStr),
@@ -154,6 +185,8 @@ export const listAppointmentsByPatientIdService = async (patientId: number): Pro
 };
 
 export const getAppointmentByIdService = async (id: number): Promise<AppointmentWithPatient> => {
+  await markPastAppointmentsAsNoShow();
+
   const result = await query<AppointmentWithPatient>(
     `SELECT a.*, p.first_name, p.last_name, p.phone, p.medical_record_number
      FROM appointments a
@@ -184,9 +217,56 @@ const updateAppointmentStatusService = async (id: number, status: AppointmentSta
   return appointment;
 };
 
-export const confirmAppointmentService = (id: number): Promise<Appointment> => updateAppointmentStatusService(id, 'Confirmed');
+// Re-confirming an old Cancelled/Completed/NoShow appointment can collide with a different
+// appointment that has since taken its date+time slot — catch that the same way
+// createAppointmentService does, instead of letting the raw constraint violation surface as a 500.
+export const confirmAppointmentService = async (id: number): Promise<Appointment> => {
+  try {
+    return await updateAppointmentStatusService(id, 'Confirmed');
+  } catch (error: unknown) {
+    if (error instanceof DatabaseError && error.constraint === 'unique_active_appointment') {
+      throw new AppError('That slot is already booked by another appointment.', 409);
+    }
+    throw error;
+  }
+};
 
 export const cancelAppointmentService = (id: number): Promise<Appointment> => updateAppointmentStatusService(id, 'Cancelled');
+
+// Only allowed once the appointment's own date+time has arrived — an appointment can't be
+// marked completed ahead of when it's actually scheduled to happen.
+export const completeAppointmentService = async (id: number): Promise<Appointment> => {
+  const result = await query<Appointment>('SELECT * FROM appointments WHERE id = $1', [id]);
+  const [appointment] = result.rows;
+
+  if (!appointment) {
+    throw new AppError('Appointment not found', 404);
+  }
+
+  if (!hasAppointmentDateTimePassed(appointment.appointment_date, appointment.appointment_time)) {
+    throw new AppError('Cannot mark an appointment as completed before its scheduled date and time', 409);
+  }
+
+  return updateAppointmentStatusService(id, 'Completed');
+};
+
+// Same time gate as completeAppointmentService — a patient can't be marked as having missed
+// an appointment that hasn't happened yet. Lets an admin apply NoShow immediately rather
+// than waiting for the next markPastAppointmentsAsNoShow sweep.
+export const noShowAppointmentService = async (id: number): Promise<Appointment> => {
+  const result = await query<Appointment>('SELECT * FROM appointments WHERE id = $1', [id]);
+  const [appointment] = result.rows;
+
+  if (!appointment) {
+    throw new AppError('Appointment not found', 404);
+  }
+
+  if (!hasAppointmentDateTimePassed(appointment.appointment_date, appointment.appointment_time)) {
+    throw new AppError('Cannot mark an appointment as no-show before its scheduled date and time', 409);
+  }
+
+  return updateAppointmentStatusService(id, 'NoShow');
+};
 
 export const deleteAppointmentService = async (id: number): Promise<void> => {
   const result = await query('DELETE FROM appointments WHERE id = $1 RETURNING id', [id]);
