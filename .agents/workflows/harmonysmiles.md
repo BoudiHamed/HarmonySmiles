@@ -3,20 +3,17 @@ description: Skill / Project Specification: Dental Clinic Reservation System
 ---
 
 Project Goal
-Build a complete Full Stack Dental Clinic Reservation System suitable for a Junior Full Stack Developer portfolio. The objective is educational:
-
+Build a complete Full Stack Dental Clinic Reservation System suitable for Real dental Clinic.
 Understand SQL deeply.
 
-Build a real-world project from scratch.
-
-Avoid ORMs.
+Use the latest syntax of technologies(typescript,postgressql,express ...etc)
 
 Use raw PostgreSQL queries through Node.js.
 
 Tech Stack
 Frontend: HTML5, CSS3, Bootstrap 5, Vanilla JavaScript, Fetch API.
 
-Backend: Node.js, Express.js.
+Backend: Node.js, Typescript, Express.js.
 
 Database: PostgreSQL (using pg package only. No ORMs).
 
@@ -25,9 +22,11 @@ Authentication: JWT, bcrypt.
 Other Packages: cors, dotenv, nodemon.
 
 General Rules
+Follow Solid princples.
+
 Follow clean architecture principles (Separate routes, controllers, middleware, and repository logic).
 
-Write readable code with explanatory comments.
+Write readable code with explanatory short comments.
 
 Use async/await for asynchronous operations.
 
@@ -45,7 +44,7 @@ Smart Available Slots (GET /available-slots):
 
 System must return only free 30-minute slots between 10:00 AM and 6:00 PM.
 
-Friday is completely unavailable. Past dates are rejected.
+Sunday is completely unavailable (clinic is in Switzerland). Past dates are rejected.
 
 Smart Filter: If the user checks slots for "today", the system must filter out and exclude slots that have already passed in the current day's hours.
 
@@ -85,7 +84,9 @@ patients Table:
 
 id (SERIAL PRIMARY KEY)
 
-full_name (VARCHAR(100) NOT NULL)
+first_name (VARCHAR(50) NOT NULL)
+
+last_name (VARCHAR(50) NOT NULL)
 
 phone (VARCHAR(30) UNIQUE NOT NULL)
 
@@ -112,7 +113,7 @@ notes (TEXT)
 created_at (TIMESTAMP DEFAULT CURRENT_TIMESTAMP)
 
 Constraints & Indexes
-Foreign Key: FOREIGN KEY (patient_id) REFERENCES patients(id) ON DELETE CASCADE
+Foreign Key: FOREIGN KEY (patient_id) REFERENCES patients(id) ON DELETE RESTRICT
 
 Partial Unique Index (Crucial Fix): * CREATE UNIQUE INDEX unique_active_appointment ON appointments (appointment_date, appointment_time) WHERE status != 'Cancelled';
 
@@ -150,5 +151,6 @@ PATCH /admin/appointments/:id/cancel (Protected)
 Sets status to Cancelled.
 
 DELETE /admin/appointments/:id (Protected)
+
 
 Deletes appointment.
