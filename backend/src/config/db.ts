@@ -19,6 +19,9 @@ const pool = new pg.Pool({
   max: 20,
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 2000,
+  // Managed Postgres hosts (Render, Supabase, Neon, ...) require SSL for external
+  // connections; local dev Postgres has no cert configured, so this is opt-in via env var.
+  ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : undefined,
 });
 
 pool.on('connect', () => {
