@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:3000/api';
+const API_BASE_URL = 'https://harmonysmiles.onrender.com/api';
 const TOKEN_KEY = 'hs_admin_token';
 
 function getToken() {
