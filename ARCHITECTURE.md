@@ -75,12 +75,13 @@ mindmap
 
 ### `server.ts` ✅
 **Purpose:** the actual process entry point — the file `npm run dev` / `npm start` executes.
-**How it works:** loads `.env` via `import 'dotenv/config'` (must happen before anything reads `process.env`), imports the configured `app` from `./app.js`, reads `PORT` (default `3000`), calls `app.listen`.
+**How it works:** loads `.env` via `import 'dotenv/config'` (must happen before anything reads `process.env`), imports the configured `app` from `./app.js`, reads `PORT` (default `3000`), calls `app.listen(PORT, '0.0.0.0', cb)`.
+**Why `'0.0.0.0'` is explicit, not just `app.listen(PORT, cb)`:** without a host argument, Node listens on the unspecified address, which started successfully but wasn't reliably reachable by Render's external port probe — the process logged "Server is running" immediately while the deploy itself still timed out ~15 minutes later with no explanation in the app's own logs. Binding explicitly to `0.0.0.0` fixed it. See `CLAUDE.md`'s Deployment section for the full symptom.
 **If missing:** there is nothing to run. `app.ts` could still be imported by tests, but there is no way to actually start the HTTP server — `npm run dev`/`npm start` would fail immediately.
 
 ### `app.ts` ✅
 **Purpose:** builds and exports the configured Express app — middleware registration, route mounting, central error handler. Deliberately does **not** call `.listen()`, so it can be imported in isolation (e.g. by a future test suite with `supertest`) without binding a port.
-**How it works:** `express()` → `express.json()` body parser → mounts `publicRouter` at `/api` → mounts `errorMiddleware` **last** (Express only recognizes 4-argument middleware as an error handler, and it only catches errors from routes registered *before* it).
+**How it works:** `express()` → `express.json()` body parser → `GET /health` (returns `{ status: 'ok' }`, unauthenticated, no validation — exists solely so Render's Health Check Path has something real to poll) → mounts `publicRouter` at `/api` → mounts `errorMiddleware` **last** (Express only recognizes 4-argument middleware as an error handler, and it only catches errors from routes registered *before* it).
 **If missing:** no Express app exists at all. `server.ts` has nothing to import; every route/controller/middleware in the project becomes unreachable even though each file compiles fine on its own. (This was actually broken earlier in this project's history — `app.ts` was empty and the app setup had accidentally been written into `server.ts` instead.)
 
 ---
@@ -94,6 +95,8 @@ mindmap
 - `getClient()` — manual checkout; caller must `.release()` themselves. Needed when multiple statements must share one connection.
 - `withTransaction(fn)` — wraps `fn` in `BEGIN` → `fn(client)` → `COMMIT`, rolling back and releasing the client on any thrown error. This is what every atomic multi-step write should use.
 - `closePool()` — ends the pool; only `seed.ts` calls this, so a one-off script actually exits instead of hanging on an open connection. The long-running server never calls it.
+
+`connectionTimeoutMillis` is `10000` (raised from an original `2000`, which was tight enough to fail a legitimate Postgres handshake — TCP + SSL negotiation + auth — over a real cross-network connection, even though the port itself was reachable). `ssl` is opt-in via `DB_SSL=true`, required for Render's managed Postgres but not set by local dev.
 **If missing:** nothing could reach the database. Every service that touches Postgres (today: `appointment.service.ts`; later: auth, admin, slots) would have to reimplement pool creation and connection handling itself — almost guaranteed to be done inconsistently, with some code paths leaking connections by forgetting `.release()`.
 
 ---
